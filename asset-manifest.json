@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/GabrielleMi/portfolio.git/static/css/main.8210a813.chunk.css",
+    "main.js": "/GabrielleMi/portfolio.git/static/js/main.6be51fd4.chunk.js",
+    "main.js.map": "/GabrielleMi/portfolio.git/static/js/main.6be51fd4.chunk.js.map",
+    "runtime-main.js": "/GabrielleMi/portfolio.git/static/js/runtime-main.9b08f86a.js",
+    "runtime-main.js.map": "/GabrielleMi/portfolio.git/static/js/runtime-main.9b08f86a.js.map",
+    "static/js/2.20983be9.chunk.js": "/GabrielleMi/portfolio.git/static/js/2.20983be9.chunk.js",
+    "static/js/2.20983be9.chunk.js.map": "/GabrielleMi/portfolio.git/static/js/2.20983be9.chunk.js.map",
+    "index.html": "/GabrielleMi/portfolio.git/index.html",
+    "precache-manifest.ea7992487b866370d1c150a3695735c4.js": "/GabrielleMi/portfolio.git/precache-manifest.ea7992487b866370d1c150a3695735c4.js",
+    "service-worker.js": "/GabrielleMi/portfolio.git/service-worker.js",
+    "static/css/main.8210a813.chunk.css.map": "/GabrielleMi/portfolio.git/static/css/main.8210a813.chunk.css.map",
+    "static/js/2.20983be9.chunk.js.LICENSE.txt": "/GabrielleMi/portfolio.git/static/js/2.20983be9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9b08f86a.js",
+    "static/js/2.20983be9.chunk.js",
+    "static/css/main.8210a813.chunk.css",
+    "static/js/main.6be51fd4.chunk.js"
+  ]
+}
