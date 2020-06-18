@@ -1,0 +1,36 @@
+@import '../_variables.scss';
+
+#projects {
+  h2 {
+    margin-bottom: 0;
+    text-align: center;
+  }
+  h3 {
+    margin-top: 0;
+  }
+}
+
+.project {
+  &-preview {
+    width: 23%;
+    overflow: hidden;
+    height: 600px;
+    position: relative;
+    transition: opacity $transitionTime ease;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    &s {
+      justify-content: space-between;
+      display: flex;
+      flex-wrap: wrap;
+      //overflow: hidden;
+      width: 100%;
+      margin-top: $xlm;
+    }
+  }
+}

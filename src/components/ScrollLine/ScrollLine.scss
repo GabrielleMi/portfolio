@@ -1,0 +1,51 @@
+@import '../_variables.scss';
+
+#scroll-bar.light {
+  & .scroll {
+    &-text {
+      color: $lightGray;
+    }
+    &-line {
+      background-color: $mediumGray;
+      &_active {
+        background-color: $lightGray;
+      }
+    }
+  }
+}
+
+.scroll {
+  width: $smallBox;
+  height: 100%;
+  display: flex;
+  position: fixed;
+  left: 2%;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  z-index:54;
+
+  &-text {
+    position: absolute;
+    transform: rotate(-90deg);
+    top: 30%;
+    transition: color $transitionTime ease;
+  }
+
+  &-line{
+    width:$smallLine;
+    height: 25%;
+    background-color: $lightGray;
+    position: relative;
+    transition: background-color $transitionTime ease;
+
+    &_active {
+      position: absolute;
+      top: 0;
+      height: 10%;
+      width:$smallLine;
+      background-color: $darkGray;
+      //transition: background-color $transitionTime ease;
+    }
+  }
+}

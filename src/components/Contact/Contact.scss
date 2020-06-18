@@ -1,0 +1,147 @@
+@import '../_variables.scss';
+
+form {
+  display : flex;
+  flex-direction:column;
+  flex-basis: 50%;
+
+  & input, & textarea {
+    background-color: rgba(0,0,0,0);
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid 1.5px $mediumGray;
+    font-family: 'Overpass', sans-serif;
+  }
+
+  & label {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    color: $mediumGray;
+    font-weight: 900;
+    transition: color $transitionTime ease;
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  & ~ label {
+    color: $lightGray;
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+input, select, textarea{
+  color: $lightGray;
+  font-family: 'Overpass', sans-serif;
+}
+
+textarea:focus, input:focus {
+  color: $lightGray;
+  font-family: 'Overpass', sans-serif;
+  & ~ label {
+    color: $lightGray;
+    &::after {
+      width: 100%;
+    }
+  }
+}
+
+#contact {
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+  z-index: 15;
+  & h3 {
+    color: $lightGray;
+    line-height: 0;
+    margin-top: -0.85rem;
+    margin-bottom: 2rem;
+  }
+  & h2 {
+    padding: 0;
+    margin: 40px 0;
+    line-height:0;
+  }
+  & .block-inner {
+    &_content {
+      flex-basis: 100%;
+    }
+
+  }
+}
+
+.contact {
+  &-cover {
+    position: absolute;
+    background-color: $darkGray;
+    width: 100%;
+    height: 100%;
+    margin-left: -5vw;
+  }
+
+  &-form {
+    &-btn {
+      margin-top: $xlm;
+    }
+    &_title {
+      margin-bottom: $xlm;
+      padding-bottom: $xlm;
+    }
+    &_warning {
+      display: flex;
+      font-size: 0.7rem;
+      color: #d36060;
+      font-style: italic;
+
+      & p {
+        text-transform: none;
+        font-size: 0.7rem;
+        padding: 0;
+        margin: 0;
+        font-weight: 300;
+      }
+      & strong {
+        margin-left: $mm;
+        margin-right: $sm;
+        font-weight: 700;
+      }
+    }
+    &_group {
+      display: flex;
+      flex-direction: column-reverse;
+      margin-bottom: $lm;
+      position: relative;
+        & label {
+          display: flex;
+          &::after {
+            bottom: 0;
+            position: absolute;
+            content: '';
+            display: block;
+            width: 0;
+            height: $smallLine;
+            background: $lightGray;
+            transition: width $transitionTime;
+            transition-timing-function: ease;
+          }
+        }
+    }
+  }
+  &-sections {
+    align-items: flex-start;
+    display: flex;
+
+    &_item {
+      display: block;
+      flex-basis: 50%;
+      width: 100%;
+      padding: $xlm;
+    }
+  }
+}
