@@ -111,8 +111,8 @@ class Home extends Component {
                                 <div className="block-inner_content-right">
                                     <Slide left delay={800} duration={1000}>
                                         <div className="photo-about">
-                                            <img className='photo-about_original' src="/img/photo-gabrielle-michaud.jpg" alt='Gabrielle Michaud'/>
-                                            <img className='photo-about_hover' src="/img/dessins-gabrielle-michaud.jpg" alt='Gabrielle Michaud Doodles'/>
+                                            <img className='photo-about_original' src={process.env.PUBLIC_URL + "/img/photo-gabrielle-michaud.jpg"} alt='Gabrielle Michaud'/>
+                                            <img className='photo-about_hover' src={process.env.PUBLIC_URL + "/img/dessins-gabrielle-michaud.jpg"} alt='Gabrielle Michaud Doodles'/>
                                             <span className="photo-about_text"><span>hover me</span></span>
                                         </div>
                                     </Slide>
