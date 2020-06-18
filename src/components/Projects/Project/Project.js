@@ -11,7 +11,7 @@ const Project = ({title, description, softwares, photo, theme, id}) => {
         <div className="project-preview">
             <Link to={`/project/${id}`}>
                 <Slide left>
-                    <img className="project-preview_img" src={`/img/${photo}-preview.jpg`} alt={`Preview ${title[lang]}`}/>
+                    <img className="project-preview_img" src={process.env.PUBLIC_URL + `/img/${photo}-preview.jpg`} alt={`Preview ${title[lang]}`}/>
                 </Slide>
             </Link>
         </div>
