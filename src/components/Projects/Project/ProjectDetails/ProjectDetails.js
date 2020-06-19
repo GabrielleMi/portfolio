@@ -58,6 +58,7 @@ const ProjectDetails = (props) => {
                         <div className="project-details_img">
                             <img src={process.env.PUBLIC_URL + `/img/${project?.photo}-1.jpg`} alt={`${project?.photo} 1`}/>
                             <img src={process.env.PUBLIC_URL + `/img/${project?.photo}-2.jpg`} alt={`${project?.photo} 2`}/>
+                            <img src={process.env.PUBLIC_URL + `/img/${project?.photo}-3.jpg`} alt={`${project?.photo} 3`}/>
                         </div>
                     </Slide>
                 </div>

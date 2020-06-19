@@ -59,7 +59,7 @@ const Contact = (props) => {
                 const warningId = 'email-warning';
                 const warning = document.getElementById(warningId);
                 const emailLabel = document.getElementById('email-label');
-                const title = '<strong>' + (lang === 'fr' ? 'Adresse mail invalide' : 'Email address not valid') + '</strong>';
+                const title = '<strong>' + (lang === 'fr' ? 'Adresse courriel invalide' : 'Email address not valid') + '</strong>';
 
                 if(warning === null || warning === undefined){
                     emailLabel.innerHTML += openTag
@@ -67,7 +67,7 @@ const Contact = (props) => {
                         + openTagAtt
                         + title
                         + '<p>'
-                        + (lang === 'fr' ? ' Woops ! Il semblerait que l\'adresse email saisie n\'est pas valide.' : ' Woops ! An error occurred with the email field.')
+                        + (lang === 'fr' ? ' Woops ! Il semblerait que l\'adresse courriel saisie n\'est pas valide.' : ' Woops ! An error occurred with the email field.')
                         + '</p>'
                         + closeTag;
                 }

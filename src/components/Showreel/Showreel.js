@@ -28,7 +28,7 @@ const Showreel = (props) => {
                     className="is-hosted is-landscape is-resizable showreel-video"
                     src="https://youtube.com/embed/0Gk2Q3y62-M?autoplay=1"
                     data-video-popup-url="https://youtube.com/embed/0Gk2Q3y62-M?autoplay=1"
-                    frameBorder="0" webkitallowfullscreen={true} mozallowfullscreen={true} allowFullScreen={true}
+                    frameBorder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowFullScreen={true}
                     allow="autoplay" >
                 </iframe>
             </div>

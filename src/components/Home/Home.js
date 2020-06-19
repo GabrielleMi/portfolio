@@ -109,7 +109,7 @@ class Home extends Component {
                         <div className="block-inner">
                             <div className="block-inner_content">
                                 <div className="block-inner_content-right">
-                                    <Slide left delay={800} duration={1000}>
+                                    <Slide left delay={200} duration={1000}>
                                         <div className="photo-about">
                                             <img className='photo-about_original' src={process.env.PUBLIC_URL + "/img/photo-gabrielle-michaud.jpg"} alt='Gabrielle Michaud'/>
                                             <img className='photo-about_hover' src={process.env.PUBLIC_URL + "/img/dessins-gabrielle-michaud.jpg"} alt='Gabrielle Michaud Doodles'/>
@@ -122,15 +122,15 @@ class Home extends Component {
                                         <Fade bottom>
                                             <span className="title-light multi">MULTI</span>
                                         </Fade>
-                                        <Fade bottom delay={800}>
+                                        <Fade bottom delay={200}>
                                             <br/>
                                             <span>M{lang === 'fr' ? 'É' : 'E'}DIA</span>
                                         </Fade>
                                     </h2>
-                                    <Fade left delay={1000}>
+                                    <Fade left delay={500}>
                                         <div className="separator-dash"></div>
                                     </Fade>
-                                    <Fade left delay={1500}>
+                                    <Fade left delay={800}>
                                         <h4> { lang === 'fr' ? "À propos" : "About" }</h4>
                                         { lang === 'fr' ?
                                             <p>Passionnée par la technologie, je suis une finissante en techniques d'Intégration Multimédia qui été charmée par les différentes facettes du multimédia.
@@ -158,10 +158,10 @@ class Home extends Component {
                             <h2>
                                 Projets
                             </h2>
-                            <Showreel />
                             <Fade left>
                                 <div className="separator-dash"></div>
                             </Fade>
+                            <Showreel />
                             <Projects allProjects={this.allProjects} />
                         </div>
                     </section>
