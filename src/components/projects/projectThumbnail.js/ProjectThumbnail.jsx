@@ -1,3 +1,4 @@
+import Btn from "../../btn/Btn";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
@@ -13,7 +14,9 @@ export default function ProjectThumbnail({ id, project }) {
 			</figure>
 			<header className={styles.info}>
 				<h2 className={styles.title}>{title}</h2>
-				<Link className={styles.btn} to={`/projets/${id}`}>Voir projet</Link>
+				<Btn tag={Link} to={`/projets/${id}`}>
+					Voir projet
+				</Btn>
 			</header>
 		</article>
 	);

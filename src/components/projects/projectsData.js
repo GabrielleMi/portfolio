@@ -41,7 +41,7 @@ export const PROJECTS_LIST = {
 		languages: ["Javascript"],
 		preview: "",
 		resume: "Un projet web",
-		softwares: [ "ThreeJS", "NextJs", "Docker", "HTML", "SCSS" ],
+		softwares: [ "ThreeJS", "NextJs", "Figma", "Docker", "HTML", "SCSS" ],
 		title: "Site Khimera"
 
 	}

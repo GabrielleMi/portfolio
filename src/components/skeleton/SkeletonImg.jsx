@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import useMountState from "../../helpers/useMountState";
+import useMountState from "../../hooks/useMountState";
 
 export default function SkeletonImg({ imgProps = {} }) {
 	const [ loadedImg, setLoadedImg ] = useMountState(null);

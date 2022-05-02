@@ -8,7 +8,9 @@ export default function Album({ photos }) {
 		<ul className={styles.container}>
 			{
 				photos.map((photo) => (
-					<li key={photo.src}><Photo {...photo} /></li>
+					<li key={photo.src}>
+						<Photo {...photo} />
+					</li>
 				))
 			}
 		</ul>
