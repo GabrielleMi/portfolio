@@ -1,0 +1,34 @@
+@use "sass:color";
+@use "../../styles/variables" as v;
+
+.section {
+	min-height: 50vh;
+	padding-bottom: v.$spacer;
+	padding-top: v.$spacer;
+}
+
+.card {
+	background-color: v.$white;
+	border-radius: v.$border-radius;
+	box-shadow: v.$box-shadow;
+	padding: v.$spacer;
+}
+
+.icon {
+	align-items: center;
+	background-color: v.$light;
+	border-radius: v.$border-radius-sm;
+	box-shadow: -5px 5px 0 color.adjust(v.$dark, $lightness: 60%);
+	color: v.$dark;
+	display: flex;
+	height: 1.5em;
+	justify-content: center;
+	line-height: 0;
+	margin-bottom: v.$spacer;
+	padding: v.$spacer;
+	width: 1.5em;
+}
+
+.title {
+	text-transform: uppercase;
+}
