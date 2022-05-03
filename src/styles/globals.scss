@@ -17,6 +17,18 @@ body {
 	color: var.$highlight;
 }
 
+.list {
+	&-unstyled {
+		list-style-type: none;
+	}
+
+	&-inline {
+		align-items: center;
+		display: flex;
+		list-style-type: none;
+	}
+}
+
 .container {
 	display: block;
 	list-style-type: none;

@@ -3,6 +3,7 @@ import Header from "../header/Header";
 import OtherProjects from "./otherProjects/OtherProjects";
 import { PROJECTS_LIST } from "../projects/projectsData";
 import React from "react";
+import styles from "./Project.module.scss";
 import { useParams } from "react-router-dom";
 
 export default function Project() {
@@ -18,7 +19,7 @@ export default function Project() {
 						<div className="cell-6">
 							<h2 className="main-section-title">Description</h2>
 							<p>{selectedProject.desc}</p>
-							{selectedProject.site && <a className="link" href={selectedProject.site} rel="noopener noreferrer" target="_blank">Voir le site <i className="fa fa-arrow-up-right-from-square" /></a>}
+							{selectedProject.link && <a className={`link ${styles.link}`} href={selectedProject.link.href} rel="noopener noreferrer" target="_blank">{selectedProject.link.text} <i className="fa fa-arrow-up-right-from-square" /></a>}
 							<section>
 								<h3>Langages utilisés</h3>
 								<ul>

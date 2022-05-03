@@ -1,0 +1,6 @@
+@use "../../styles/variables" as v;
+
+.link {
+	display: block;
+	margin-bottom: v.$spacer;
+}

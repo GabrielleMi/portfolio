@@ -1,7 +1,9 @@
+import Badge from "../../badge/Badge";
 import Btn from "../../btn/Btn";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
+import { removeSpecialChars } from "../../../helpers/strings";
 import styles from "./ProjectThumbnail.module.scss";
 
 export default function ProjectThumbnail({ id, project }) {
@@ -14,6 +16,14 @@ export default function ProjectThumbnail({ id, project }) {
 			</figure>
 			<header className={styles.info}>
 				<h2 className={styles.title}>{title}</h2>
+				<ul className="list-inline">
+					{project.languages.map((lang) => (
+						<Badge color={removeSpecialChars(lang).toLowerCase()} key={lang} tag="li">
+							{lang}
+						</Badge>
+					))}
+				</ul>
+				<p>{project.shortDesc}</p>
 				<Btn tag={Link} to={`/projets/${id}`}>
 					Voir projet
 				</Btn>

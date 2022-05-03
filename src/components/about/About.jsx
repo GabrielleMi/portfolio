@@ -15,8 +15,7 @@ export default function About() {
 				</header>
 				<p>Je suis une personne très ambitieuse qui souhaite apprendre et me dépasser. Je prime par dessous tout l&apos;organisation et le travail bien fait.</p>
 				<p>Dans mes temps libres, j&apos;adore regarder des vidéos sur le cosmos et j&apos;ai une admiration particulière pour les pieuvres et leur capacité d&apos;apprentissage.</p>
-				<p>Il m&apos;est quasi impossible de fonctionner sans une tasse de café le matin.</p>
-				<p>Le language de programmation que j&apos;ai le plus utilisé est le <strong>javascript</strong>. J&apos;ai également eu la chance de développer en utilisant du <strong>PHP</strong> et ai programmé un jeu en <strong>C#</strong>. J&apos;ai également de l&apos;expérience avec les librairies <strong>ReactJs</strong>, <strong>ThreeJs</strong>, <strong>SCSS</strong> et <strong>Bootstrap</strong>. De plus, j&apos;ai utilisé des outils de versionnage tels que Github et Bitbucket et ai effleuré en surface les containers Docker.</p>
+				{/* <p>Le language de programmation que j&apos;ai le plus utilisé est le <code>javascript</code>. J&apos;ai également eu la chance de développer en utilisant du <code>PHP</code> et ai programmé Unity un jeu en <code>C#</code>. J&apos;ai également de l&apos;expérience avec les librairies <code>ReactJs</code>, <code>ThreeJs</code>, <code>SCSS</code> et <code>Bootstrap</code>. De plus, j&apos;ai utilisé des outils de versionnage tels que Github et Bitbucket et ai effleuré en surface les containers Docker.</p> */}
 			</div>
 		</section>
 	);
