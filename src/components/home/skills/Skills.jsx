@@ -1,9 +1,10 @@
 import React from "react";
+import ScrollFade from "../../visual/scrollFade/ScrollFade";
 import styles from "./Skills.module.scss";
 
 export default function Skills() {
 	return (
-		<section className={`container ${styles.section}`} id="skills">
+		<ScrollFade className={`container ${styles.section}`} id="skills" tag="section">
 			<ul className="grid">
 				<li className="cell-4">
 					<section className={styles.card}>
@@ -27,6 +28,6 @@ export default function Skills() {
 					</section>
 				</li>
 			</ul>
-		</section>
+		</ScrollFade>
 	);
 }

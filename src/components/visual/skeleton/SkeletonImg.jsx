@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import useMountState from "../../hooks/useMountState";
+import useMountState from "../../../hooks/useMountState";
 
 export default function SkeletonImg({ imgProps = {} }) {
 	const [ loadedImg, setLoadedImg ] = useMountState(null);
 	const { src, ...imageProps } = imgProps;
 
 	useEffect(() => {
-		let newImg = new Image();
+		const newImg = new Image();
 
 		newImg.onload = function() {
 			setLoadedImg(this.src);
@@ -20,7 +20,7 @@ export default function SkeletonImg({ imgProps = {} }) {
 		loadedImg ?
 			<img {...imageProps} src={loadedImg} />
 			:
-			<div style={{ backgroundColor: "red" }} />
+			<span style={{ backgroundColor: "red" }} />
 	);
 }
 

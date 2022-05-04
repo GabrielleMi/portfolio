@@ -3,6 +3,7 @@ import Header from "../header/Header";
 import OtherProjects from "./otherProjects/OtherProjects";
 import { PROJECTS_LIST } from "../projects/projectsData";
 import React from "react";
+import ZigZag from "../visual/line/ZigZag";
 import styles from "./Project.module.scss";
 import { useParams } from "react-router-dom";
 
@@ -17,7 +18,10 @@ export default function Project() {
 				<section className="container main-section">
 					<article className="grid centered">
 						<div className="cell-6">
-							<h2 className="main-section-title">Description</h2>
+							<h2 className="main-section-title">
+								Description
+								<ZigZag width={120} />
+							</h2>
 							<p>{selectedProject.desc}</p>
 							{selectedProject.link && <a className={`link ${styles.link}`} href={selectedProject.link.href} rel="noopener noreferrer" target="_blank">{selectedProject.link.text} <i className="fa fa-arrow-up-right-from-square" /></a>}
 							<section>

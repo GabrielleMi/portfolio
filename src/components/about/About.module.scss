@@ -1,7 +1,0 @@
-@use "sass:color";
-@use "../../styles/variables" as v;
-
-.img {
-	border-radius: v.$border-radius;
-	box-shadow: -5px 5px 0 color.adjust(v.$dark, $lightness: 60%);
-}

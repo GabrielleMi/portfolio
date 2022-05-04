@@ -24,7 +24,7 @@ export default function ProjectThumbnail({ id, project }) {
 					))}
 				</ul>
 				<p>{project.shortDesc}</p>
-				<Btn tag={Link} to={`/projets/${id}`}>
+				<Btn className="link-stretched" tag={Link} to={`/projets/${id}`}>
 					Voir projet
 				</Btn>
 			</header>

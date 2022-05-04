@@ -1,7 +1,7 @@
 import Modal from "../../../modal/Modal";
 import PropTypes from "prop-types";
 import React from "react";
-import SkeletonImg from "../../../skeleton/SkeletonImg";
+import SkeletonImg from "../../../visual/skeleton/SkeletonImg";
 import styles from "./Photo.module.scss";
 import { useToggle } from "../../../../hooks/useToggle";
 

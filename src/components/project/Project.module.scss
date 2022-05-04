@@ -1,6 +1,7 @@
+@use "sass:map";
 @use "../../styles/variables" as v;
 
 .link {
 	display: block;
-	margin-bottom: v.$spacer;
+	margin-bottom: map.get(v.$spacers, "lg");
 }

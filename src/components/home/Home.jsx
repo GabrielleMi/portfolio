@@ -1,9 +1,9 @@
-import About from "../about/About";
+import About from "./about/About";
 import Btn from "../btn/Btn";
 import Header from "../header/Header";
 import Projects from "../projects/Projects";
 import React from "react";
-import Skills from "../skills/Skills";
+import Skills from "./skills/Skills";
 
 export default function Home() {
 	return (

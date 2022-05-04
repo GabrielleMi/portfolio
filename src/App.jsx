@@ -2,6 +2,7 @@ import "./styles/globals.scss";
 import Footer from './components/footer/Footer';
 import { Outlet } from "react-router-dom";
 import React from 'react';
+import ScrollToTop from "./components/scrollToTop/ScrollToTop";
 
 const logStyles = [
 	"color: #fff",
@@ -23,6 +24,7 @@ function App() {
 
 	return (
 		<>
+			<ScrollToTop />
 			<Outlet />
 			<Footer />
 		</>
