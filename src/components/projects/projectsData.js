@@ -21,6 +21,7 @@ export const PROJECTS_LIST = {
 				src: Cinema3
 			}
 		],
+		date: "2020",
 		desc: "Ce projet a été créé afin de mettre en valeur les projets d'une photographe / designer. Puisqu'elle souhaitait mettre de l'avant son background en cinéma, le concept du portfolio a été construit autour de cet aspect.",
 		languages: [ "Javascript", "SCSS" ],
 		link: {
@@ -34,6 +35,7 @@ export const PROJECTS_LIST = {
 		title: "Cinéma Portfolio"
 	},
 	"jeu-qualia": {
+		date: "2020",
 		desc: "Ce jeu a été créé dans le cadre d'un cours de conception de jeu. Tous les éléments du jeu ont été créés et intégrés dans Unity par moi. La mécanique, quant à elle, se résume à pouvoir clôner le personnage et l'utiliser pour résoudre des puzzles générés procéduralement dans l'environnement.",
 		languages: ["C#"],
 		link: {
@@ -47,6 +49,7 @@ export const PROJECTS_LIST = {
 		title: "Jeu Qualia"
 	},
 	"khimera": {
+		date: "2022",
 		desc: "Ce site est en développement. Il est présentement produit dans l'objectif de permettre aux usagers de réserver en ligne tout en mettant de l'avant les produits de l'entreprise. Khimera est une entreprise de divertissements, qui souhaite pousser les limites de la technologie dans des jeux tels que les jeux d'évasion.",
 		languages: [ "Javascript", "SCSS" ],
 		preview: KhimeraPreview,

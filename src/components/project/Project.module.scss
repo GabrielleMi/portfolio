@@ -2,6 +2,6 @@
 @use "../../styles/variables" as v;
 
 .link {
-	display: block;
+	display: inline-block;
 	margin-bottom: map.get(v.$spacers, "lg");
 }

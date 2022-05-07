@@ -1,4 +1,5 @@
 import Album from "./album/Album";
+import Btn from "../btn/Btn";
 import Header from "../header/Header";
 import OtherProjects from "./otherProjects/OtherProjects";
 import { PROJECTS_LIST } from "../projects/projectsData";
@@ -23,7 +24,7 @@ export default function Project() {
 								<ZigZag width={120} />
 							</h2>
 							<p>{selectedProject.desc}</p>
-							{selectedProject.link && <a className={`link ${styles.link}`} href={selectedProject.link.href} rel="noopener noreferrer" target="_blank">{selectedProject.link.text} <i className="fa fa-arrow-up-right-from-square" /></a>}
+							{selectedProject.link && <Btn className={styles.link} color="primary" href={selectedProject.link.href} rel="noopener noreferrer" tag="a" target="_blank">{selectedProject.link.text} <i className="fa fa-arrow-up-right-from-square" /></Btn>}
 							<section>
 								<h3>Langages utilisés</h3>
 								<ul>

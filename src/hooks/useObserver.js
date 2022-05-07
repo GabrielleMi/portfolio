@@ -11,14 +11,13 @@ function getTresholds(amount) {
 }
 
 const DEFAULT_TRESH_COUNT = 20;
+const DEFAULT_OPTIONS = {
+	root: null,
+	rootMargin: "0px",
+	tresholds: getTresholds(DEFAULT_TRESH_COUNT)
+};
 
-export function useObserver(
-	options = {
-		root: null,
-		rootMargin: "0px",
-		tresholds: getTresholds(DEFAULT_TRESH_COUNT)
-	}
-) {
+export function useObserver(options = DEFAULT_OPTIONS) {
 	const ref = useRef(null);
 	const [ isIntersecting, setIntersecting ] = useState(false);
 	const observer = useRef(new IntersectionObserver(([entry]) => setIntersecting(entry.intersectionRatio), options));
