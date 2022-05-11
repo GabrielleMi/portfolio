@@ -1,0 +1,10 @@
+@use "../../styles/variables" as v;
+
+.container {
+	border-radius: v.$border-radius-sm;
+	box-shadow: v.$box-shadow;
+	max-height: 500px;
+	padding: v.$spacer;
+	tab-size: 4;
+	width: 100%;
+}

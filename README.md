@@ -9,7 +9,7 @@ This is the repository of my portfolio. Feel free to look at how it was made or 
 
 ## About me
 ### Languages
-The languages I am most familiar with are `C#` and `javascript`.  
+The languages I am most familiar with are `javascript` and `C#`.  
 I've also had the chance to use, very briefly, `PHP` for web projects.
 
 ### Frameworks & Softwares

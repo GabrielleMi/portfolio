@@ -1,16 +1,11 @@
-import * as THREE from "three";
 import { HEXA_WHITE, isWebGLSupported } from "./sceneUtils";
 import React, { useEffect, useRef } from "react";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import Octopus from "./assets/Octopus";
-import { RenderPass } from "postprocessing";
-import SceneCamera from "./assets/SceneCamera";
-import SceneComposer from "./assets/SceneComposer";
-import SceneLights from "./assets/SceneLights";
-import ScenePlane from "./assets/ScenePlane";
+import { Color } from "three";
+import PropTypes from "prop-types";
+import SceneBase from "./assets/SceneBase";
 import styles from "./ThreeScene.module.scss";
 
-export default function ThreeScene() {
+export default function ThreeScene({ addObject }) {
 	const canvasRef = useRef();
 	const animRef = useRef();
 
@@ -19,43 +14,29 @@ export default function ThreeScene() {
 		const canvas = canvasRef.current;
 
 		if(isWebGLSupported() && !animRef.current && canvas) {
-			const { clientWidth: width, clientHeight: height } = canvas;
-			const scene = new THREE.Scene();
-			const clock = new THREE.Clock();
-			const color = new THREE.Color(HEXA_WHITE);
-			const loader = new GLTFLoader();
-			const camera = SceneCamera({ height, width });
-			const composer = SceneComposer({ canvas, height, width });
-			const plane = ScenePlane({ color });
-			const lights = SceneLights({ color });
-			const far = 700;
+			const color = new Color(HEXA_WHITE);
+			const { scene, animate, mixer, killScene } = SceneBase({ canvas, color });
 
-			const animate = () => {
-				animRef.current = window.requestAnimationFrame(animate);
-				composer.render(clock.getDelta());
+			const onAnimate = () => {
+				animate();
+				animRef.current = window.requestAnimationFrame(onAnimate);
 			};
 
-			const handleOnResize = () => {
-				composer.setSize(window.innerWidth, window.innerHeight);
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-			};
-
-			removeEventListeners = () => {
-				window.removeEventListener("resize", handleOnResize);
+			const handleRemoveEventListeners = () => {
 				cancelAnimationFrame(animRef.current);
+				killScene();
 			};
 
-			Octopus({ color, loader, onLoad: (model) => scene.add(model) });
-			scene.fog = new THREE.Fog(color, 1, far);
-			scene.background = color;
+			addObject?.(scene)
+				.then((obj) => {
+					if(obj && obj.animations[0]) {
+						mixer.clipAction(obj.animations[0]).play();
+					}
+				});
 
-			lights.forEach((light) => scene.add(light));
-			scene.add(plane);
-			composer.addPass(new RenderPass(scene, camera));
-			window.addEventListener("resize", handleOnResize);
+			removeEventListeners = handleRemoveEventListeners;
 
-			animate();
+			onAnimate();
 		}
 
 		return () => {
@@ -66,3 +47,7 @@ export default function ThreeScene() {
 
 	return <canvas className={styles.canvas} id="three-octopus" ref={canvasRef} />;
 }
+
+ThreeScene.propTypes = {
+	addObject: PropTypes.func
+};

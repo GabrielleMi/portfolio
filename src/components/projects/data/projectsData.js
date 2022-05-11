@@ -1,9 +1,11 @@
-import Cinema1 from "../../images/projects/cinema/album-1.jpg";
-import Cinema2 from "../../images/projects/cinema/album-2.jpg";
-import Cinema3 from "../../images/projects/cinema/album-3.jpg";
-import CinemaPreview from "../../images/projects/cinema/preview.jpg";
-import KhimeraPreview from "../../images/projects/khimera/preview.jpg";
-import QualiaPreview from "../../images/projects/qualia/preview.jpg";
+import Cinema1 from "../../../images/projects/cinema/album-1.jpg";
+import Cinema2 from "../../../images/projects/cinema/album-2.jpg";
+import Cinema3 from "../../../images/projects/cinema/album-3.jpg";
+import CinemaPreview from "../../../images/projects/cinema/preview.jpg";
+import KhimeraPreview from "../../../images/projects/khimera/preview.jpg";
+import ProjectScene from "../../threeScene/components/ProjectScene";
+import QualiaPreview from "../../../images/projects/qualia/preview.jpg";
+import { door } from "./qualiaCodeExtract";
 
 export const PROJECTS_LIST = {
 	"cinema-portfolio": {
@@ -35,8 +37,14 @@ export const PROJECTS_LIST = {
 		title: "Cinéma Portfolio"
 	},
 	"jeu-qualia": {
+		codeSnippet: {
+			code: door,
+			fileName: "Door.cs",
+			language: "csharp"
+		},
 		date: "2020",
 		desc: "Ce jeu a été créé dans le cadre d'un cours de conception de jeu. Tous les éléments du jeu ont été créés et intégrés dans Unity par moi. La mécanique, quant à elle, se résume à pouvoir clôner le personnage et l'utiliser pour résoudre des puzzles générés procéduralement dans l'environnement.",
+		header: ProjectScene,
 		languages: ["C#"],
 		link: {
 			href: "https://github.com/GabrielleMi/qualia",

@@ -1,7 +1,6 @@
 import Nav from "./nav/Nav";
 import PropTypes from "prop-types";
 import React from "react";
-import ThreeScene from "../threeScene/ThreeScene";
 import styles from "./Header.module.scss";
 
 export default function Header({ subtitle, title, children }) {
@@ -15,7 +14,6 @@ export default function Header({ subtitle, title, children }) {
 				</hgroup>
 				{children}
 			</div>
-			<ThreeScene />
 		</header>
 	);
 }

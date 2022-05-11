@@ -1,4 +1,4 @@
-import { PROJECTS_LIST } from "./projectsData";
+import { PROJECTS_LIST } from "./data/projectsData";
 import ProjectThumbnail from "./projectThumbnail.js/ProjectThumbnail";
 import React from "react";
 import ScrollFade from "../visual/scrollFade/ScrollFade";
