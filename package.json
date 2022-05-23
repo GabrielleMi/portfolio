@@ -9,7 +9,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "sass": "^1.52.0",
+    "sass": "^1.52.1",
     "three": "^0.140.2"
   },
   "devDependencies": {
