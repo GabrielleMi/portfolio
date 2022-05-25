@@ -15,7 +15,7 @@
   "devDependencies": {
     "eslint": "^7.23.0",
     "eslint-plugin-react": "^7.30.0",
-    "stylelint": "^14.8.3",
+    "stylelint": "^14.8.4",
     "stylelint-config-standard-scss": "^3.0.0",
     "stylelint-order": "^5.0.0",
     "stylelint-scss": "^4.1.0"
