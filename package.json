@@ -10,7 +10,7 @@
     "react-scripts": "5.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "sass": "^1.52.1",
-    "three": "^0.140.2"
+    "three": "^0.141.0"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
