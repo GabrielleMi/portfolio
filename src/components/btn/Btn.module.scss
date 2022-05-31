@@ -5,9 +5,9 @@
 	border: none;
 	border-radius: v.$border-radius;
 	cursor: pointer;
+	font-size: 0.95rem;
 	outline: none;
 	padding: map.get(v.$spacers, "xs") v.$spacer;
-	text-transform: uppercase;
 
 	&Primary {
 		background-color: v.$highlight;

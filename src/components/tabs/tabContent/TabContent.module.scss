@@ -1,0 +1,11 @@
+@use "../../../styles/variables" as v;
+
+.container {
+	border-radius: v.$border-radius-sm;
+	display: none;
+	overflow: hidden;
+
+	&.isActive {
+		display: block;
+	}
+}

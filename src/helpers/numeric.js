@@ -11,3 +11,17 @@ export function getRandomInt(min, max) {
 
 	return Math.floor((Math.random() * (max - min)) + min);
 }
+
+export function clamp(nb, min, max) {
+	return Math.max(Math.min(max, nb), min);
+}
+
+/**
+ * Returns the amount of digits in a number
+ * @param {number} nb
+ * @see https://stackoverflow.com/questions/14879691/get-number-of-digits-with-javascript
+ * @returns {number}
+ */
+export function getDigitsCount(nb) {
+	return `${Math.abs(nb)}`.length;
+}

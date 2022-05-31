@@ -45,7 +45,7 @@ export default function ThreeScene({ addObject }) {
 
 	}, []);
 
-	return <canvas className={styles.canvas} id="three-octopus" ref={canvasRef} />;
+	return <canvas className={styles.canvas} id="three-scene" ref={canvasRef} />;
 }
 
 ThreeScene.propTypes = {

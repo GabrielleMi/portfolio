@@ -37,11 +37,18 @@ export const PROJECTS_LIST = {
 		title: "Cinéma Portfolio"
 	},
 	"jeu-qualia": {
-		codeSnippet: {
-			code: door,
-			fileName: "Door.cs",
-			language: "csharp"
-		},
+		codeSnippets: [
+			{
+				code: door,
+				fileName: "Door.cs",
+				language: "csharp"
+			},
+			{
+				code: door,
+				fileName: "Door2.cs",
+				language: "csharp"
+			}
+		],
 		date: "2020",
 		desc: "Ce jeu a été créé dans le cadre d'un cours de conception de jeu. Tous les éléments du jeu ont été créés et intégrés dans Unity par moi. La mécanique, quant à elle, se résume à pouvoir clôner le personnage et l'utiliser pour résoudre des puzzles générés procéduralement dans l'environnement.",
 		header: ProjectScene,
