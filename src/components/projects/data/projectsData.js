@@ -1,3 +1,4 @@
+import { door, elevator, zone } from "./qualiaCodeExtract";
 import Cinema1 from "../../../images/projects/cinema/album-1.jpg";
 import Cinema2 from "../../../images/projects/cinema/album-2.jpg";
 import Cinema3 from "../../../images/projects/cinema/album-3.jpg";
@@ -5,7 +6,6 @@ import CinemaPreview from "../../../images/projects/cinema/preview.jpg";
 import KhimeraPreview from "../../../images/projects/khimera/preview.jpg";
 import ProjectScene from "../../threeScene/components/ProjectScene";
 import QualiaPreview from "../../../images/projects/qualia/preview.jpg";
-import { door } from "./qualiaCodeExtract";
 
 export const PROJECTS_LIST = {
 	"cinema-portfolio": {
@@ -44,8 +44,13 @@ export const PROJECTS_LIST = {
 				language: "csharp"
 			},
 			{
-				code: door,
-				fileName: "Door2.cs",
+				code: elevator,
+				fileName: "Elevator.cs",
+				language: "csharp"
+			},
+			{
+				code: zone,
+				fileName: "Zone.cs",
 				language: "csharp"
 			}
 		],

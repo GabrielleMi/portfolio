@@ -34,8 +34,10 @@ export default function ProjectThumbnail({ id, project }) {
 
 ProjectThumbnail.propTypes = {
 	id: PropTypes.string,
-	project: PropTypes.objectOf({
+	project: PropTypes.shape({
+		languages: PropTypes.arrayOf(PropTypes.string),
 		preview: PropTypes.string,
-		title: PropTypes.oneOfType([ PropTypes.string, PropTypes.element ])
+		shortDesc: PropTypes.string,
+		title: PropTypes.string
 	})
 };

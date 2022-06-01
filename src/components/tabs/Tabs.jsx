@@ -6,6 +6,16 @@ import TabNav from "./tabNav/TabNav";
 import { clamp } from "../../helpers/numeric";
 import { removeSpecialChars } from "../../helpers/strings";
 
+/**
+ * @typedef Tab
+ * @property {string} id
+ * @property {string|React.ReactNode} name
+ * @property {string|React.ReactNode} content
+ */
+/**
+ * @param {object} props
+ * @param {Tab[]} props.tabs
+ */
 export default function Tabs({ tabs = [] }) {
 	const [ active, setActive ] = useState(0);
 
@@ -32,9 +42,9 @@ Tabs.defaultProps = {
 };
 
 Tabs.propTypes = {
-	tabs: PropTypes.arrayOf(PropTypes.objectOf({
+	tabs: PropTypes.arrayOf(PropTypes.shape({
 		content: ChildrenType.isRequired,
 		id: PropTypes.string.isRequired,
-		name: PropTypes.oneOfType([ PropTypes.string, PropTypes.element ]).isRequired
+		name: ChildrenType.isRequired
 	}))
 };
