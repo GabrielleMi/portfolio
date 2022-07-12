@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "postprocessing": "^6.28.1",
+    "postprocessing": "^6.28.2",
     "prism-react-renderer": "^1.3.5",
     "prismjs": "^1.28.0",
     "react": "^18.2.0",
