@@ -20,12 +20,13 @@
 	border-radius: v.$border-radius-sm;
 	color: v.$dark;
 	display: flex;
-	height: 1.5em;
+	font-size: 1.5rem;
+	height: 2rem;
 	justify-content: center;
 	line-height: 0;
 	margin-bottom: v.$spacer;
 	padding: v.$spacer;
-	width: 1.5em;
+	width: 2rem;
 }
 
 .title {

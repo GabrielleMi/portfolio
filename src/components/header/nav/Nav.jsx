@@ -9,7 +9,7 @@ export default function Nav() {
 			<Link to={{ hash: "#top", pathname: "/" }}>
 				<Logo className={styles.logo} />
 			</Link>
-			<ul className="nav-list">
+			<ul className={`nav-list ${styles.links}`}>
 				<li className="nav-list-item">
 					<Link className="nav-list-link" to={{ hash: "#about", pathname: "/" }}>
                         À propos
@@ -24,14 +24,6 @@ export default function Nav() {
 					<a className="nav-list-link" href="#contact">
                         Contact
 					</a>
-				</li>
-			</ul>
-			<ul className={`${styles.social} nav-list`}>
-				<li className="nav-list-item">
-					<a aria-label="Github" className="nav-list-link fab fa-github" href="https://github.com/GabrielleMi" rel="noopener noreferrer" target="_blank" />
-				</li>
-				<li className="nav-list-item">
-					<a aria-label="LinkedIn" className="nav-list-link fab fa-linkedin-in" href="" rel="noopener noreferrer" target="_blank" />
 				</li>
 			</ul>
 		</nav>

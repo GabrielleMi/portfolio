@@ -15,7 +15,7 @@ export default function Projects() {
 					<ZigZag width={120} />
 				</h2>
 				<p className="cell-8">
-                    Une liste des mes projets. La majorité sont des sites développés avec le framework React.js, mais d&apos;autres exemples montrent des développements avec du <code>C#</code>, Arduino ou <code>PHP</code>.
+                    Une liste des mes projets. La majorité sont des sites développés avec le framework React.js, mais d&apos;autres exemples montrent des développements avec du <code>C#</code>, <code>dart</code> ou <code>PHP</code>.
 				</p>
 			</header>
 			<ul className={`cell-12 ${styles.list}`}>
