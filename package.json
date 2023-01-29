@@ -10,7 +10,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.0",
     "sass": "^1.57.1",
-    "three": "^0.148.0"
+    "three": "^0.149.0"
   },
   "devDependencies": {
     "react-scripts": "5.0.1",
