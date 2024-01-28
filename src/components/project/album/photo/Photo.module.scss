@@ -1,5 +1,19 @@
 @use "sass:map";
+@use "sass:color";
 @use "../../../../styles/variables" as v;
+
+.preview {
+	bottom: 0;
+	filter: grayscale(100%);
+	height: 100%;
+	left: 0;
+	object-fit: cover;
+	position: absolute;
+	right: 0;
+	top: 0;
+	transition: filter 0.15s ease-in-out;
+	width: 100%;
+}
 
 .btn {
 	background: transparent;
@@ -11,13 +25,20 @@
 	position: relative;
 	width: 100%;
 
+	&::after {
+		content: "";
+		display: block;
+		padding-top: 100%;
+		width: 100%;
+	}
+
 	&::before {
-		background-image: radial-gradient(rgba(v.$dark, 0.5), rgba(v.$black, 0.75));
+		background-color: color.adjust(v.$black, $blackness: 20%);
 		bottom: 0;
 		content: "";
+		display: block;
 		left: 0;
-		opacity: 0;
-		pointer-events: none;
+		opacity: 0.3;
 		position: absolute;
 		right: 0;
 		top: 0;
@@ -25,56 +46,13 @@
 		z-index: 10;
 	}
 
-	&:hover::before {
-		opacity: 1;
-	}
+	&:hover {
+		&::before {
+			opacity: 0;
+		}
 
-	&::after {
-		content: "";
-		display: block;
-		padding-top: 100%;
-		width: 100%;
-	}
-}
-
-.preview {
-	bottom: 0;
-	height: 100%;
-	left: 0;
-	object-fit: cover;
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 100%;
-}
-
-.modal {
-	background-color: rgba(0, 0, 0, 85%);
-	bottom: 0;
-	display: flex;
-	justify-content: center;
-	left: 0;
-	margin: 0 auto;
-	overflow: auto;
-	padding-bottom: v.$spacer;
-	padding-top: v.$spacer;
-	position: fixed;
-	right: 0;
-	top: 0;
-	z-index: 100;
-
-	&Inner {
-		border-radius: 1rem;
-		box-shadow: -2px 2px 10px rgba(v.$black, 0.75);
-		margin: auto;
-		max-width: min(500px, 66vw);
-		overflow: hidden;
-		position: relative;
-	}
-
-	&Btn {
-		position: absolute;
-		right: 0;
-		top: 0;
+		.preview {
+			filter: grayscale(0);
+		}
 	}
 }

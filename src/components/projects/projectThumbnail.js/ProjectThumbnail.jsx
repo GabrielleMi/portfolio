@@ -1,6 +1,9 @@
+import Badge from "../../badge/Badge";
+import Btn from "../../btn/Btn";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
+import { removeSpecialChars } from "../../../helpers/strings";
 import styles from "./ProjectThumbnail.module.scss";
 
 export default function ProjectThumbnail({ id, project }) {
@@ -13,7 +16,17 @@ export default function ProjectThumbnail({ id, project }) {
 			</figure>
 			<header className={styles.info}>
 				<h2 className={styles.title}>{title}</h2>
-				<Link className={styles.btn} to={`/projets/${id}`}>Voir projet</Link>
+				<ul className="list-inline">
+					{project.languages.map((lang) => (
+						<Badge color={removeSpecialChars(lang).toLowerCase()} key={lang} tag="li">
+							{lang}
+						</Badge>
+					))}
+				</ul>
+				<p>{project.shortDesc}</p>
+				<Btn className="link-stretched" tag={Link} to={`/projets/${id}`}>
+					Voir projet
+				</Btn>
 			</header>
 		</article>
 	);
@@ -21,8 +34,10 @@ export default function ProjectThumbnail({ id, project }) {
 
 ProjectThumbnail.propTypes = {
 	id: PropTypes.string,
-	project: PropTypes.objectOf({
+	project: PropTypes.shape({
+		languages: PropTypes.arrayOf(PropTypes.string),
 		preview: PropTypes.string,
-		title: PropTypes.oneOfType([ PropTypes.string, PropTypes.element ])
+		shortDesc: PropTypes.string,
+		title: PropTypes.string
 	})
 };

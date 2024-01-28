@@ -3,9 +3,11 @@ import App from './App';
 import Home from './components/home/Home';
 import Project from './components/project/Project';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('app'));
+
+root.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<Routes>
@@ -22,7 +24,5 @@ ReactDOM.render(
 				</Route>
 			</Routes>
 		</BrowserRouter>
-	</React.StrictMode>,
-	// eslint-disable-next-line no-undef
-	document.getElementById('root')
+	</React.StrictMode>
 );

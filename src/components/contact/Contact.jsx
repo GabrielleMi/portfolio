@@ -11,7 +11,7 @@ export default function Contact() {
 			<p className="container">Allons prendre un café, j&apos;t&apos;accro.</p>
 			<address className="container">
 				<span className={styles.addressItem}><i className="fa fa-envelope" /> gabrielle.mi@hotmail.com</span>
-				<a className={styles.addressItem} href="https://github.com/" rel="noopener noreferrer" target="_blank">
+				<a className={styles.addressItem} href="https://github.com/GabrielleMi" rel="noopener noreferrer" target="_blank">
 					<i className="fab fa-github" /> GabrielleMi
 				</a>
 			</address>

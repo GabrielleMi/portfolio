@@ -1,7 +1,13 @@
 import "./styles/globals.scss";
 import Footer from './components/footer/Footer';
 import { Outlet } from "react-router-dom";
+import Prism from "prism-react-renderer/prism";
 import React from 'react';
+import ScrollToTop from "./components/scrollToTop/ScrollToTop";
+
+(typeof global === "undefined" ? window : global).Prism = Prism;
+require("prismjs/components/prism-clike");
+require("prismjs/components/prism-csharp");
 
 const logStyles = [
 	"color: #fff",
@@ -23,6 +29,7 @@ function App() {
 
 	return (
 		<>
+			<ScrollToTop />
 			<Outlet />
 			<Footer />
 		</>

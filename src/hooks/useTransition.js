@@ -4,11 +4,14 @@ import { useRef } from "react";
  * @param {number} [fps=0]
  * @returns {[ function, function ]}
  */
-export default function useTransition(fps = 0) {
+export default function useTransition(fps = 60) {
 	const timer = useRef();
+	const timeout = useRef();
+	const SECOND_MS = 1000;
 
 	function cancelTransition() {
 		cancelAnimationFrame(timer.current);
+		clearTimeout(timeout.current);
 		timer.current = null;
 	}
 
@@ -47,7 +50,7 @@ export default function useTransition(fps = 0) {
 
 				cancelTransition();
 			} else {
-				requestAnimationFrame(repeat);
+				timeout.current = setTimeout(() => requestAnimationFrame(repeat), SECOND_MS / fps);
 			}
 		});
 	}

@@ -1,28 +1,38 @@
 import Album from "./album/Album";
+import Btn from "../btn/Btn";
+import CodeSnippet from "../codeSnippet/CodeSnippet";
 import Header from "../header/Header";
 import OtherProjects from "./otherProjects/OtherProjects";
-import { PROJECTS_LIST } from "../projects/projectsData";
+import { PROJECTS_LIST } from "../projects/data/projectsData";
 import React from "react";
+import Tabs from "../tabs/Tabs";
+import ZigZag from "../visual/line/ZigZag";
+import styles from "./Project.module.scss";
 import { useParams } from "react-router-dom";
 
 export default function Project() {
 	const { id } = useParams();
-	const selectedProject = PROJECTS_LIST[id];
+	const theProject = PROJECTS_LIST[id];
 
 	return (
 		<>
-			<Header subtitle={selectedProject.resume} title={selectedProject.title} />
+			<Header subtitle={theProject.resume} title={theProject.title}>
+				{theProject.header?.()}
+			</Header>
 			<main>
 				<section className="container main-section">
 					<article className="grid centered">
 						<div className="cell-6">
-							<h2 className="main-section-title">Description</h2>
-							<p>{selectedProject.desc}</p>
-							{selectedProject.site && <a className="link" href={selectedProject.site} rel="noopener noreferrer" target="_blank">Voir le site <i className="fa fa-arrow-up-right-from-square" /></a>}
+							<h2 className="main-section-title">
+								Description
+								<ZigZag width={120} />
+							</h2>
+							<p>{theProject.desc}</p>
+							{theProject.link && <Btn className={styles.link} color="dark" href={theProject.link.href} rel="noopener noreferrer" tag="a" target="_blank">{theProject.link.text} <i className="fa fa-arrow-up-right-from-square" /></Btn>}
 							<section>
 								<h3>Langages utilisés</h3>
 								<ul>
-									{selectedProject.languages.map((language) => (
+									{theProject.languages.map((language) => (
 										<li key={language}>{language}</li>
 									))}
 								</ul>
@@ -30,21 +40,31 @@ export default function Project() {
 							<section>
 								<h3>Technologies utilisés</h3>
 								<ul>
-									{selectedProject.softwares.map((software) => (
+									{theProject.softwares.map((software) => (
 										<li key={software}>{software}</li>
 									))}
 								</ul>
 							</section>
 						</div>
 						<figure className="cell-6">
-							<img alt={selectedProject.title} src={selectedProject.preview} />
+							{theProject.codeSnippets ?
+								<Tabs
+									tabs={theProject.codeSnippets.map((snippet) => ({
+										content: <CodeSnippet code={snippet.code} language={snippet.language} />,
+										id: `${snippet.fileName}-${snippet.language}`,
+										name: snippet.fileName
+									}))}
+								/>
+								:
+								<img alt={theProject.title} src={theProject.preview} />
+							}
 						</figure>
 					</article>
 					{
-						Array.isArray(selectedProject.album) && selectedProject.album.length > 0 &&
+						Array.isArray(theProject.album) && theProject.album.length > 0 &&
 							<section>
 								<h3>Gallerie d&apos;images</h3>
-								<Album photos={selectedProject.album} />
+								<Album photos={theProject.album} />
 							</section>
 					}
 				</section>

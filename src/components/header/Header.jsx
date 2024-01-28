@@ -1,10 +1,9 @@
-import Btn from "../btn/Btn";
 import Nav from "./nav/Nav";
 import PropTypes from "prop-types";
 import React from "react";
 import styles from "./Header.module.scss";
 
-export default function Header({ subtitle, title }) {
+export default function Header({ subtitle, title, children }) {
 	return (
 		<header className={styles.container} id="top">
 			<Nav />
@@ -13,13 +12,14 @@ export default function Header({ subtitle, title }) {
 					<h1 className={styles.title}>{title || "Gabrielle Michaud"}</h1>
 					{(!title || (title && subtitle)) && <h2 className={styles.subtitle}>{subtitle || "Développeuse web"}</h2>}
 				</hgroup>
-				<Btn color="dark" type="button">Projets</Btn>
+				{children}
 			</div>
 		</header>
 	);
 }
 
 Header.propTypes = {
+	children: PropTypes.oneOfType([ PropTypes.arrayOf(PropTypes.element), PropTypes.element ]),
 	subtitle: PropTypes.string,
 	title: PropTypes.string
 };

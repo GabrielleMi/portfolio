@@ -9,6 +9,7 @@
 .list {
 	align-items: center;
 	display: flex;
+	list-style-type: none;
 
 	&Item {
 		flex-basis: 33%;

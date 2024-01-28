@@ -1,8 +1,11 @@
+import ProjectThumbnail from "../../projects/projectThumbnail.js/ProjectThumbnail";
 import PropTypes from "prop-types";
 import React from "react";
+import shuffle from "../../../helpers/arrays";
 import styles from "./OtherProjects.module.scss";
 
 export default function OtherProjects({ projects }) {
+	const shuffledProjects = shuffle(projects);
 
 	return (
 		<section className={`container ${styles.container}`}>
@@ -11,9 +14,9 @@ export default function OtherProjects({ projects }) {
 				<h2 className="main-section-title">Autres projets</h2>
 			</header>
 			<ul className={styles.list}>
-				{projects.map((project) => (
+				{shuffledProjects.map((project) => (
 					<li className={styles.listItem} key={project.id}>
-                        hi
+						<ProjectThumbnail id={project.id} project={project} />
 					</li>
 				))}
 			</ul>

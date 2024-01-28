@@ -12,21 +12,23 @@ function capitalize(str) {
  * @param {string} props.className
  * @returns {JSX.IntrinsicElements.button}
  */
-export default function Btn({ color, className, ...props }) {
+export default function Btn({ tag: Tag = "button", color, className, ...props }) {
 	const btnColorClass = styles[`btn${capitalize(color)}`] ?? "";
 	const btnClasses = `${styles.btn}${className ? ` ${className}` : ""}${btnColorClass ? ` ${btnColorClass}` : ""}`;
 
 
 	return (
-		<button className={btnClasses} {...props} />
+		<Tag className={btnClasses} {...props} />
 	);
 }
 
 Btn.defaultProps = {
-	color: "primary"
+	color: "primary",
+	tag: "button"
 };
 
 Btn.propTypes = {
 	className: PropTypes.string,
-	color: PropTypes.oneOf([ "primary", "dark", "light" ])
+	color: PropTypes.oneOf([ "primary", "dark", "light" ]),
+	tag: PropTypes.oneOfType([ PropTypes.string, PropTypes.elementType ])
 };

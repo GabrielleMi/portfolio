@@ -5,9 +5,9 @@
 	border: none;
 	border-radius: v.$border-radius;
 	cursor: pointer;
+	font-size: 0.95rem;
 	outline: none;
 	padding: map.get(v.$spacers, "xs") v.$spacer;
-	text-transform: uppercase;
 
 	&Primary {
 		background-color: v.$highlight;
@@ -17,7 +17,7 @@
 
 	&Dark {
 		background-color: v.$black;
-		box-shadow: -15px 15px 25px rgba(v.$black, 0.3);
+		box-shadow: -15px 15px 25px rgba(v.$black, 0.1);
 		color: v.$white;
 		transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
