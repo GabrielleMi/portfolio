@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* For rgb(255 115 179 / <alpha-value>) */
+        --color-primary-950: 181 193 210;
+        --color-primary-900: 216 223 233;
+        --color-primary-800: 226 232 240;
+        --color-primary-700: 241 245 249;
+
+        --color-highlight: 219 39 119;
+
+        --color-white: 250 250 250;
+    }
+
+    html.dark {
+        --color-primary-950: 3 7 18;
+        --color-primary-900: 17 24 39;
+        --color-primary-800: 31 41 55;
+        --color-primary-700: 55 65 81;
+    }
+}

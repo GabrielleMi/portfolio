@@ -1,0 +1,55 @@
+---
+import ColorPicker from "../components/ColorPicker.astro";
+---
+
+<aside class="bg-primary-900 flex flex-col z-10 relative rounded-tr-xl p-6 shadow-xl">
+    <h2 class="mb-6">Theme Customizer</h2>
+    <div class="w-full border flex flex-col border-dashed border-current rounded mb-6 opacity-30 p-1" style="height:100px;">
+      <div class="w-full border border-dashed border-current rounded h-1/6 mb-1" />
+      <div class="h-full border border-dashed border-current rounded w-1/6" />
+    </div>
+    <code class="text-xs font-mono">
+      <span class="opacity-50">{`.portfolio.style {`}</span>
+      <span class="flex items-center">
+        &emsp;&emsp;
+        <span class="opacity-75">background-color:</span> 
+        <ColorPicker
+          class="ml-1"
+          id="main-950"
+          defaultVariant={900}
+          variants={[
+            950,
+            900,
+            800,
+            700
+          ]}
+          name="color-primary"
+        />
+      </span>
+      <span class="flex items-center">
+        &emsp;&emsp;
+        <span class="opacity-75">color:</span> 
+        <ColorPicker
+          class="ml-1"
+          id="main-950"
+          name="color-white"
+        />
+      </span>
+      <span class="flex items-center">
+        &emsp;&emsp;
+        <span class="opacity-75">highlight:</span> 
+        <ColorPicker
+          class="ml-1"
+          id="main-950"
+          name="color-highlight"
+        />
+      </span>
+      <span class="opacity-50">{"}"}</span>
+    </code>
+    <footer class="mt-auto pt-3">
+		<small class="leading-none">
+      © 2024, Gabrielle Michaud<br />
+      <small>Made with Astro, React and Tailwind.</small>
+    </small>
+	</footer>
+</aside>

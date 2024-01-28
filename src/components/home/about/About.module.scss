@@ -1,7 +1,0 @@
-@use "sass:color";
-@use "../../../styles/variables" as v;
-
-.img {
-	border-radius: v.$border-radius;
-	box-shadow: v.$box-shadow;
-}

@@ -1,0 +1,134 @@
+---
+const { variants, defaultVariant, class: className, ...props } = Astro.props;
+if(!props.id) {
+    console.error("Color picker needs an id");
+}
+if(!props.name) {
+    console.error("Color picker needs a name");
+}
+---
+<label
+    style={`color:rgb(var(--${props.name}${defaultVariant ? `-${defaultVariant}` : ""}));`}
+    class:list={[
+        "relative rounded shadow border border-black dark:border-white overflow-hidden",
+        "color-picker",
+        className
+    ]}
+>
+    <input 
+        data-default={defaultVariant}
+        data-variants={variants ? variants.join(',') : ""}
+        type="color"
+        {...props}
+        class="absolute inset-0 invisible"
+    />
+</label>
+<style>
+    .color-picker::before {
+        background-color: currentColor;
+        content: "";
+        display: block;
+        width: 0.7em;
+        height: 0.7em;
+    }
+</style>
+<script>
+    const MAX_COLOR_INT = 255;
+
+    function getLowestMiddleHighest(rgb: [ number, number, number ]) {
+
+        const highest = { val: -1, index: -1 };
+        const lowest = { val: Infinity, index: -1 };
+
+        rgb.forEach((val, index) => {
+            if(val > highest.val){
+                highest.val = val;
+                highest.index = index;
+            }
+
+            if(val < lowest.val){
+                lowest.val = val;
+                lowest.index = index;
+            }
+        });
+
+        if(lowest.index === highest.index){
+            lowest.index = highest.index + 1;
+        }
+        
+        const index = (rgb.length - highest.index - lowest.index); 
+        const middle = {
+            index: index,
+            val: rgb[index]
+        };
+
+        return [ lowest, middle, highest ];
+    }
+
+    function hexToRgb(hex: string): [ number, number, number ]{
+        // @ts-ignore
+        return hex.replace(
+            /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+            (_, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
+        )
+            .substring(1).match(/.{2}/g)
+            .map((x) => parseInt(x, 16))
+    }
+
+    function adjustBrightness(rgb: [ number, number, number ], percentage: number) {
+        const fract = MAX_COLOR_INT * percentage / 100;
+        const [ lowest, middle, highest ] = getLowestMiddleHighest(rgb);
+
+        if(lowest.val === MAX_COLOR_INT){
+            return rgb;
+        }
+
+        const newRgb = [];
+        // First work out increase on lower value
+        newRgb[lowest.index] = Math.round(lowest.val + (Math.min(MAX_COLOR_INT - lowest.val, fract)));
+
+        // Then apply to the middle and higher values
+        const increaseFraction  = (newRgb[lowest.index] - lowest.val) / (MAX_COLOR_INT - lowest.val);
+        newRgb[middle.index] = middle.val + (MAX_COLOR_INT - middle.val) * increaseFraction;
+        newRgb[highest.index] = highest.val + (MAX_COLOR_INT - highest.val) * increaseFraction;
+
+        return newRgb;
+    }
+
+    const colorPickers = document.querySelectorAll("input[type='color']");
+
+    colorPickers.forEach((colorPicker: HTMLInputElement) => {
+        const variants = colorPicker.getAttribute("data-variants");
+        const cssVarName = `--${colorPicker.name}`;
+
+        const handleOnChange = (e) => {
+            const rgb = hexToRgb(e.target.value);
+
+            if(variants) {
+                const defaultVariant = colorPicker.getAttribute("data-default");
+                const splitVariants = variants.split(",");
+                const defaultIndex = splitVariants.findIndex((variant) => variant === defaultVariant);
+
+                if(defaultVariant) {
+                    document.body.style.setProperty(`${cssVarName}-${defaultVariant}`, rgb.join(' '));
+                } else {
+                    document.body.style.setProperty(cssVarName, rgb.join(' '));
+                }
+                
+                splitVariants.forEach((variant, i) => {
+                    if(variant !== defaultVariant) {
+                        const deltaI = defaultIndex === -1 ? i : i - defaultIndex;
+                        const adjustColor = adjustBrightness(rgb, 8 * deltaI);
+                        document.body.style.setProperty(`${cssVarName}-${variant}`, adjustColor.join(' '));
+                    }
+                    
+                })
+
+            } else {
+                document.body.style.setProperty(cssVarName, rgb.join(' '));
+            }
+        }
+
+        colorPicker.addEventListener("change", handleOnChange);
+    });
+</script>

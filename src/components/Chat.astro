@@ -1,0 +1,103 @@
+---
+import ContactForm from "./ContactForm";
+---
+
+<button
+	type="button"
+	data-contact-control
+	aria-haspopup="dialog"
+	class="fixed bottom-0 hover:text-highlight transition-colors right-0 mr-6 mb-6 text-3xl"
+>
+	<i class="fa-solid fa-comment"></i>
+</button>
+<dialog id="contact" class="contact bg-transparent right-0 px-6 pt-6 pb-12 mb-6 mr-0">
+	<ContactForm client:load />
+</dialog>
+<script>
+	const contact = document.getElementById("contact") as HTMLDialogElement;
+	const contactBtns = document.querySelectorAll<HTMLButtonElement>("[data-contact-control]");
+
+	const closeContact = () => contact.close();
+
+	const closeOnBackdropClick = (e: Event) => {
+		const target = e.target as HTMLDialogElement;
+
+		if(target.id === "contact" && contact.open) {
+			closeContact();
+		}
+	};
+
+	const closeContactBtn = contact.querySelector<HTMLButtonElement>("#contact-close");
+
+	contactBtns.forEach((btn) => {
+		btn.addEventListener("click", () => {
+			if(contact.open) {
+				closeContact();
+			} else {
+				contact.showModal();
+			}
+		});
+	});
+	contact.addEventListener("click", closeOnBackdropClick);
+	closeContactBtn.addEventListener("click", closeContact);
+</script>
+<style is:global>
+	.contact {
+		color: inherit;
+	}
+    .contact::backdrop {
+        opacity: 0;
+    }
+    .contact-form {
+        min-height: 50vh;
+        width: 300px;
+    }
+	.loading-dots {
+		animation-name: fade;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+		animation-duration: 1000ms;
+
+		background-color: currentColor;
+		border-radius: 0.5em;
+		display: block;
+		height: 0.5em;
+		width: 0.5em;
+		margin-right: 2em;
+		margin-top: 0.25em;
+		margin-bottom: 0.25em;
+		position: relative;
+	}
+	.loading-dots::after {
+		content: "";
+		border-radius: 0.5em;
+		background-color: currentColor;
+		height: 0.5em;
+		width: 0.5em;
+		position: absolute;
+		top: 0;
+		left: 0.75em;
+	}
+	.loading-dots::before {
+		content: "";
+		background-color: currentColor;
+		border-radius: 0.5em;
+		display: block;
+		top: 0;
+		position: absolute;
+		height: 0.5em;
+		width: 0.5em;
+		left: 1.5em;
+	}
+	@keyframes fade {
+		0% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.35;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+</style>

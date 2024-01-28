@@ -1,0 +1,66 @@
+---
+
+---
+<button
+    id="theme-mode-switch"
+    type="button"
+    title="Switch mode"
+    class="relative switch-container bg-primary-950"
+/>
+<style>
+    .switch-container {
+        box-shadow: inset -1px 1px 4px rgb(0 0 0 / 0.5);
+        display: block;
+        border-radius: 1000px;
+        height: 1em;
+        width: 2em;
+    }
+    .switch-container::after {
+        content: "";
+        border-radius: 1000px;
+        background-color: currentColor;
+        height: 1.1rem;
+        width: 1.1rem;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        left: 75%;
+        transition: left 0.15s ease-out, transform 0.15s ease-out;
+    }
+
+    html:not(.dark) .switch-container::after {
+        transform: translate(-50%, -50%) rotate(45deg);
+        height: 2px;
+        width: 2px;
+        box-shadow:
+            0 0 0 0.125rem currentColor,
+            0 -7px 0 0 currentColor,
+            0 7px 0 0 currentColor,
+            7px 0 0 0 currentColor,
+            -7px 0 0 0 currentColor,
+            4.5px 4.5px 0 0 currentColor, /* bottom right */
+            4.5px -4.5px 0 0 currentColor, /* top right */
+            -4.5px 4.5px 0 0 currentColor, /* bottom left */
+            -4.5px -4.5px 0 0 currentColor; /* top left */
+    }
+    html.dark .switch-container::after {
+        left: 25%;
+    }
+    .switch-container::before {
+        content: "";
+        background-color: inherit;
+        border-radius: 1000px;
+        top: 40%;
+        left: 75%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        width: 0.8rem;
+        height: 0.8rem;
+        transition: left 0.15s ease-out;
+        z-index: -1;
+    }
+    html.dark .switch-container::before {
+        left: 40%;
+        z-index: 1;
+    }
+</style>

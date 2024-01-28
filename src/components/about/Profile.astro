@@ -1,0 +1,198 @@
+---
+import Expandable from "../Expandable.astro";
+import NextLogo from "../logos/NextLogo.astro";
+import ReactLogo from "../logos/ReactLogo.astro";
+import AstroLogo from "../logos/AstroLogo.astro";
+import TailwindLogo from "../logos/TailwindLogo.astro";
+import BootstrapLogo from "../logos/BootstrapLogo.astro";
+import CodeIgniterLogo from "../logos/CodeIgniterLogo.astro";
+import DockerLogo from "../logos/DockerLogo.astro";
+import Planet from "./Planet.astro";
+import SentryLogo from "../logos/SentryLogo.astro";
+
+const { class: className, ...props } = Astro.props;
+---
+<section
+    {...props}
+    id="about"
+    class:list={[
+        className,
+        "rounded-xl w-[350px] p-6 text-center"
+    ]}
+>
+    <Expandable>
+        <Fragment slot="beforeExpand">
+            <figure class="w-2/3 bg-black aspect-square rounded-full mx-auto mb-4">
+            </figure>
+            <h1 class="text-4xl"><strong>Web</strong> Developer</h1>
+            <p>With a highly artistic mind.</p>
+            <small>And a love story with coffee...</small><br />
+            <button type="button" class="pt-3 hover:text-highlight transition-colors">En savoir plus</button>
+        </Fragment>
+        <Fragment slot="afterExpand">
+            <header class="flex flex-col justify-center items-center py-8 min-h-screen">
+                <p class="opacity-50">/about</p>
+                <h1 class="text-7xl font-bold mb-1">Gabrielle Michaud</h1>
+                <p class="text-2xl">Développeuse web depuis 2021</p>
+            </header>
+            <div class="container">
+                <section class="mb-6 py-8 min-h-screen">
+                    <header class="text-center">
+                        <h2 class="text-5xl mb-2 font-bold">Compétences</h2>
+                        <p class="text-xl mb-8">J'ai eu la chance d'explorer le graphic design, le motion design et l'intégration.<br />Le développement web est resté.</p>
+                    </header>
+                    <ul class="grid grid-cols-4 gap-4">
+                        <li>
+                            <article class="h-full border border-primary-800 bg-gradient-to-t from-primary-900 to-primary-800 rounded-lg p-4">
+                                <i class="fa-solid fa-code text-2xl mb-2"></i>
+                                <h3 class="font-semibold text-xl">HTML/CSS</h3>
+                                <p class="text-sm opacity-50">Connaissances approfondies sur les bonnes pratiques HTML et le design responsive.</p>
+                            </article>
+                        </li>
+                        <li>
+                            <article class="h-full border border-primary-800 bg-gradient-to-t from-primary-900 to-primary-800 rounded-lg p-4">
+                                <i class="fa-brands fa-js text-2xl mb-2"></i>
+                                <h3 class="font-semibold text-xl">Javascript</h3>
+                                <p class="text-sm opacity-50">Familière avec le javascript et des frameworks tels que React.</p>
+                            </article>
+                        </li>
+                        <li>
+                            <article class="h-full border border-primary-800 bg-gradient-to-t from-primary-900 to-primary-800 rounded-lg p-4">
+                                <i class="fa-brands fa-php text-2xl mb-2"></i>
+                                <h3 class="font-semibold text-xl">PHP</h3>
+                                <p class="text-sm opacity-50">Expérience avec le PHP. Développement dans un CMS maison et API avec CodeIgniter.</p>
+                            </article>
+                        </li>
+                        <li>
+                            <article class="h-full border border-primary-800 bg-gradient-to-t from-primary-900 to-primary-800 rounded-lg p-4">
+                                <i class="fa-solid fa-code-compare text-2xl mb-2"></i>
+                                <h3 class="font-semibold text-xl">Git</h3>
+                                <p class="text-sm opacity-50">Connaissances de base en matière de commandes terminals et utilisation fréquente de Github Desktop.</p>
+                            </article>
+                        </li>
+                    </ul>
+                    <section class="text-center pt-8 mt-6">
+                        <h3 class="opacity-50">J'ai travaillé avec</h3>
+                        <ul class="flex gap-12 items-center justify-center">
+                            <li>
+                                <a 
+                                    href="https://react.dev/" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="React"
+                                >
+                                    <ReactLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    href="https://nextjs.org/" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="NextJs"
+                                >
+                                    <NextLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    href="https://astro.build/" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="Astro"
+                                >
+                                    <AstroLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    href="https://astro.build/" 
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="Tailwind"
+                                >
+                                    <TailwindLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://getbootstrap.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="Bootstrap"
+                                >
+                                    <BootstrapLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://codeigniter.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="Code Igniter"
+                                >
+                                    <CodeIgniterLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://www.docker.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="Docker"
+                                >
+                                    <DockerLogo />
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://sentry.io/welcome/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="hover:opacity-50 cursor-pointer flex justify-center"
+                                    title="Sentry"
+                                >
+                                    <SentryLogo />
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </section>
+                <section class="min-h-screen">
+                    <header class="text-center">
+                        <h2 class="text-5xl mb-2 font-bold">Passions</h2>
+                        <p class="text-xl mb-8">Ma soif d'apprentissage s'étend au-delà du web.</p>
+                    </header>
+                    <Planet />
+                    <!-- <<ul>
+                        <li><i class="fa-solid fa-meteor"></i> Cosmos</li>
+                        <li><i class="fa-solid fa-mountain-sun"></i> Escalade</li>
+                        <li><i class="fa-solid fa-person-hiking"></i> Randonnée</li>
+                        <li><i class="fa-solid fa-mug-hot"></i> Café</li>
+                        <li><i class="fa-solid fa-book"></i> Livres d'horreur</li>
+                    </ul>> -->
+                </section>
+                <section class="min-h-screen flex items-center gap-8 justify-content-center">
+                    <h2 class="text-7xl uppercase text-right mb-2 font-bold w-1/2">
+                        Fun<br />
+                        Facts
+                    </h2>
+                    <ul class="text-xl w-1/2">
+                        <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> J'ai deux chats</li>
+                        <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> J'ai joué dans Macaroni tout garni</li>
+                        <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> Je mangerais du tartare tous les jours</li>
+                        <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> Il me manque l'extrémité du majeur gauche</li>
+                        <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> Mon jeu préféré est <a class="ml-1 underline" target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Bloodborne">Bloodborne</a></li>
+                    </ul>
+                </section>
+            </div>
+        </Fragment>
+    </Expandable>
+</section>

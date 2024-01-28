@@ -1,0 +1,87 @@
+---
+import "../assets/style/main.css";
+const { title, class: className } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	</head>
+	<!-- <body class:list={[ className, "bg-grid h-screen text-dark-1 bg-light-1 dark:text-light-3 dark:bg-dark-1" ]}> -->
+	<body class:list={[ className, "bg-grid dark:text-white bg-primary-950 h-screen bg-primary" ]}>
+		<slot />
+	</body>
+</html>
+<style>
+	.bg-grid {
+		position: relative;
+		z-index: 10;
+	}
+
+	.bg-grid::after {
+		background: repeating-linear-gradient(
+			to right,
+			rgb(var(--color-primary-900)),
+			rgb(var(--color-primary-900)) 1px,
+			transparent 1px,
+			transparent 4.5rem
+		),
+		linear-gradient(
+			to bottom,
+			rgb(var(--color-primary-900)),
+			rgb(var(--color-primary-900)) 1px,
+			transparent 1px,
+			transparent 4.5rem
+		);
+		background-size: 100% 4.5rem;
+		content: "";
+		inset: 0;
+		opacity: 0.5;
+		position: absolute;
+		z-index: -10;
+	}
+
+	.bg-grid::before {
+		background: radial-gradient(closest-side, rgb(var(--color-highlight)), rgb(var(--color-highlight) / 0));
+		content: "";
+		height: 75vmin;
+		opacity: 0.2;
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 75vmin;
+		z-index: -5;
+	}
+</style>
+<script>
+	import { THEME_DARK, toggleTheme } from "../helpers/theme";
+
+	const switchBtn = document.getElementById("theme-mode-switch");
+
+	const getTheme = () => {
+		if(typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+			return localStorage.getItem("theme");
+		}
+
+		if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			return "dark";
+		}
+
+		return "light";
+	};
+
+	if(switchBtn) {
+		switchBtn.addEventListener("click", () => {
+			toggleTheme(getTheme() === THEME_DARK ? "light" : "dark");
+		});
+	}
+
+	toggleTheme(getTheme());
+</script>

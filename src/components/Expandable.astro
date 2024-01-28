@@ -1,0 +1,27 @@
+---
+const { class: beforeClass, ...beforeProps } = Astro.props.beforeProps || {};
+const { class: afterClass, ...afterProps } = Astro.props.afterProps || {};
+---
+<div {...beforeProps} class:list={[ beforeClass, "before-expand-visual" ]}>
+    <slot name="beforeExpand" />
+</div>
+<div {...afterProps} class:list={[ afterClass, "after-expand-visual w-screen h-full overflow-auto absolute inset-0 text-left p-[inherit]" ]}>
+    <slot name="afterExpand" />
+</div>
+<style is:global>
+    .before-expand-visual,
+    .after-expand-visual {
+        transition: opacity 0.15s ease-out;
+        opacity: 0;
+        pointer-events: none;
+    }
+    [data-expandable]:not([data-expanded]) .before-expand-visual {
+        opacity: 1;
+        pointer-events: all;
+        
+    }
+    [data-expanded] .after-expand-visual {
+        opacity: 1;
+        pointer-events: all;
+    }
+</style>

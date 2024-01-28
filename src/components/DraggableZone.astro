@@ -1,0 +1,149 @@
+<div data-draggable-zone class="h-full w-full">
+    <slot />
+</div>
+<script>
+    const draggableZones = document.querySelectorAll<HTMLDivElement>("[data-draggable-zone]");
+
+    draggableZones.forEach((zone) => {
+        const draggableItems = zone.querySelectorAll<HTMLDivElement>("[data-draggable]");
+
+        draggableItems.forEach((draggable) => {
+            let timeout: number;
+            let animationFrame: number;
+
+            let posX = 0;
+            let posY = 0;
+
+            function cancelTimeouts() {
+                window.cancelAnimationFrame(animationFrame);
+                window.clearTimeout(timeout);
+            }
+
+            function getAllowedPositions({ x, y }: { x: number, y: number }) {
+                const clamp = (val: number, min: number, max: number) => {
+                    return Math.min(Math.max(val, min), max);
+                }
+
+                return {
+                    top: Math.max(y, 0),
+                    left: clamp(
+                        x,
+                        0,
+                        zone.offsetWidth - draggable.offsetWidth
+                    )
+                }
+            }
+
+            function onMouseMove(e: MouseEvent) {
+                e.preventDefault();
+                cancelTimeouts();
+
+                animationFrame = window.requestAnimationFrame(function () {
+                    // TODO: calc in percentage for responsiveness
+                    const deltaX = posX - e.clientX;
+                    const deltaY = posY - e.clientY;
+                    const { top, left } = getAllowedPositions({
+                        y: draggable.offsetTop - deltaY,
+                        x: draggable.offsetLeft - deltaX
+                    });
+                    
+                    posX = e.clientX;
+                    posY = e.clientY;
+                    draggable.style.top = `${top}px`;
+                    draggable.style.left = `${left}px`;
+                });
+            }
+
+            function onMouseDown(e: MouseEvent) {
+                if(!draggable.hasAttribute("data-expanded")) {
+                    cancelTimeouts();
+                    
+                    posX = e.clientX;
+                    posY = e.clientY;
+    
+                    timeout = window.setTimeout(() => {
+                        draggable.setAttribute("data-dragging", "");
+                        document.addEventListener("mousemove", onMouseMove);
+                    }, 100);
+    
+                    document.addEventListener("mouseup", onMouseUp);
+                }
+            }
+
+            function expandItem() {
+                draggable.setAttribute("data-expanded", "");
+                
+                const closeBtn = draggable.querySelector("[data-expandable-close]");
+
+                const onCloseExpand = () => {
+                    draggable.removeAttribute("data-expanded");
+                    closeBtn.removeEventListener("click", onCloseExpand)
+                }
+
+                closeBtn.addEventListener("click", onCloseExpand)
+            }
+            
+            function onMouseUp() {
+                cancelTimeouts();
+
+                if(draggable.hasAttribute("data-dragging")) {
+                    draggable.removeAttribute("data-dragging");
+
+                    window.sessionStorage.setItem(
+                        draggable.id,
+                        JSON.stringify({
+                            x: parseInt(draggable.style.left),
+                            y: parseInt(draggable.style.top),
+                        })
+                    );
+
+                } else if(draggable.hasAttribute("data-expandable")) {
+                    expandItem();
+                }
+
+                document.removeEventListener("mouseup", onMouseUp);
+                document.removeEventListener("mousemove", onMouseMove);
+            }
+
+            function initDraggable() {
+                const storagePos = window.sessionStorage.getItem(draggable.id);
+                const { top, left } = getAllowedPositions(
+                    storagePos ?
+                        JSON.parse(storagePos)
+                        :
+                        {
+                            y: draggable.offsetTop,
+                            x: draggable.offsetLeft
+                        }
+                );
+
+                draggable.style.width = `${draggable.offsetWidth}px`;
+                draggable.style.height = `${draggable.offsetHeight}px`;
+                draggable.style.top = `${top}px`;
+                draggable.style.left = `${left}px`;
+
+                draggable.addEventListener("mousedown", onMouseDown);
+            }
+
+            initDraggable();
+        });
+    });
+</script>
+<style is:global>
+    [data-expandable]:not([data-dragging]) {
+        transition:
+            top 0.15s ease-out,
+            bottom 0.15s ease-out,
+            left 0.15s ease-out,
+            right 0.15s ease-out,
+            background-color 0.15s ease-out,
+            width 0.15s ease-out;
+    }
+
+    [data-expanded] {
+        left: 0 !important;
+        height: 100% !important;
+        top: 0 !important;
+        width: 100% !important;
+    }
+</style>
