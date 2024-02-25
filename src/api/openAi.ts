@@ -69,7 +69,8 @@ export function fetchMessage(body: OpenAiBodyType): Promise<OpenAiResponseType> 
                     }
                 ],
                 ...body
-            }
+            },
+            mode: 'cors'
         }
     );
 }
