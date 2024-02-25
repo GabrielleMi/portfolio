@@ -113,7 +113,8 @@ export default function ContactForm() {
     };
 
     const proceedWithContact = () => {
-        (stepData.schema || string()).validate(input)
+        (stepData.schema || string())
+            .validate(input)
             .then(() => {
                 const currentStep = EMAIL_STEPS_DATA.steps.findIndex((step) => step === email.step);
 
@@ -186,7 +187,7 @@ export default function ContactForm() {
                 }
             })
             .catch(console.error)
-            .finaly(() => {
+            .finally(() => {
                 setIsTyping(false);
             });
     };

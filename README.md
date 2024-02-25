@@ -1,4 +1,6 @@
 # Portfolio
+Lien: https://gabriellemi.github.io/portfolio/
+
 Développé avec [Tailwind](https://tailwindcss.com/) et [Astro](https://astro.build/), ce portfolio contient des projets sur lesquels j'ai travaillé.
 
 J'ai également exploré les [lambda functions](https://aws.amazon.com/) et le [API Gateway](https://aws.amazon.com/) sur AWS pour intégrer l'API [openai](https://platform.openai.com/).
