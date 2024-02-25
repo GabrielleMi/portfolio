@@ -1,15 +1,24 @@
 # Portfolio
-Développé avec tailwind et astro, ce portfolio contient des projets sur lesquels j'ai travaillé.
+Développé avec [Tailwind](https://tailwindcss.com/) et [Astro](https://astro.build/), ce portfolio contient des projets sur lesquels j'ai travaillé.
 
-## Langages
-- javascript
+J'ai également exploré les [lambda functions](https://aws.amazon.com/) et le [API Gateway](https://aws.amazon.com/) sur AWS pour intégrer l'API [openai](https://platform.openai.com/).
+
+## Compétences
+
+### Langages
+- Javascript
+- HTML / CSS
 - php
 
-## Technologies / Librairies
-Une liste des technologies et librairies avec lesquelles j'ai travaillé.
+### Technologies / Librairies
+- [React](https://react.dev/)
+- [NextJS](https://nextjs.org/)
+- [Astro](https://astro.build/)
+- [CodeIgniter 4.0](https://codeigniter.com/)
+- [Tailwind](https://tailwindcss.com/)
+- [Bootstrap](https://getbootstrap.com/)
 
-- React
-- NextJS
-- CodeIgniter 4.0
-- Tailwind
-- Bootstrap
+## Projets
+- Qualia
+- Kathleen M. Foster
+- Carrefour Jeunesse-Emploi des moulins

@@ -1,13 +1,11 @@
 ---
-import { Image } from 'astro:assets';
 import Aside from '../layouts/Aside.astro';
-import Chat from '../components/Chat.astro';
+import Chat from '../components/chat/Chat.astro';
 import DocumentBase from '../layouts/DocumentBase.astro';
-import Nav from '../layouts/Nav.astro';
-import DraggableZone from '../components/DraggableZone.astro';
-import Profile from '../components/about/Profile.astro';
 import DraggableExpand from '../components/DraggableExpand.astro';
-import QualiaPreviewImg from "../assets/images/qualia-preview.png";
+import DraggableZone from '../components/DraggableZone.astro';
+import Nav from '../layouts/Nav.astro';
+import Profile from '../components/about/Profile.astro';
 ---
 
 <DocumentBase
@@ -20,15 +18,15 @@ import QualiaPreviewImg from "../assets/images/qualia-preview.png";
 	<Aside />
 	<main id="main" class="h-full w-full">
 		<DraggableZone>
-			<DraggableExpand id="draggable-qualia">
-				<Image 
+			<!-- <DraggableExpand id="draggable-qualia">
+				<AstroImage
 					class="select-none"
 					src={QualiaPreviewImg}
 					width={290}
 					draggable={false}
 					alt="Qualia login interface"
 				/>
-			</DraggableExpand>
+			</DraggableExpand> -->
 			<DraggableExpand id="draggable-profile">
 				<Profile />
 			</DraggableExpand>

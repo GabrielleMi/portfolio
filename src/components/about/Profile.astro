@@ -1,14 +1,14 @@
 ---
-import Expandable from "../Expandable.astro";
-import NextLogo from "../logos/NextLogo.astro";
-import ReactLogo from "../logos/ReactLogo.astro";
 import AstroLogo from "../logos/AstroLogo.astro";
-import TailwindLogo from "../logos/TailwindLogo.astro";
 import BootstrapLogo from "../logos/BootstrapLogo.astro";
 import CodeIgniterLogo from "../logos/CodeIgniterLogo.astro";
 import DockerLogo from "../logos/DockerLogo.astro";
+import Expandable from "../Expandable.astro";
+import NextLogo from "../logos/NextLogo.astro";
 import Planet from "./Planet.astro";
+import ReactLogo from "../logos/ReactLogo.astro";
 import SentryLogo from "../logos/SentryLogo.astro";
+import TailwindLogo from "../logos/TailwindLogo.astro";
 
 const { class: className, ...props } = Astro.props;
 ---
@@ -30,7 +30,7 @@ const { class: className, ...props } = Astro.props;
             <button type="button" class="pt-3 hover:text-highlight transition-colors">En savoir plus</button>
         </Fragment>
         <Fragment slot="afterExpand">
-            <header class="flex flex-col justify-center items-center py-8 min-h-screen">
+            <header class="flex flex-col justify-center items-center py-8 text-center min-h-screen">
                 <p class="opacity-50">/about</p>
                 <h1 class="text-7xl font-bold mb-1">Gabrielle Michaud</h1>
                 <p class="text-2xl">Développeuse web depuis 2021</p>
@@ -41,7 +41,7 @@ const { class: className, ...props } = Astro.props;
                         <h2 class="text-5xl mb-2 font-bold">Compétences</h2>
                         <p class="text-xl mb-8">J'ai eu la chance d'explorer le graphic design, le motion design et l'intégration.<br />Le développement web est resté.</p>
                     </header>
-                    <ul class="grid grid-cols-4 gap-4">
+                    <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <li>
                             <article class="h-full border border-primary-800 bg-gradient-to-t from-primary-900 to-primary-800 rounded-lg p-4">
                                 <i class="fa-solid fa-code text-2xl mb-2"></i>
@@ -72,11 +72,11 @@ const { class: className, ...props } = Astro.props;
                         </li>
                     </ul>
                     <section class="text-center pt-8 mt-6">
-                        <h3 class="opacity-50">J'ai travaillé avec</h3>
-                        <ul class="flex gap-12 items-center justify-center">
+                        <h3 class="opacity-50 mb-4 lg:mb-0">J'ai travaillé avec</h3>
+                        <ul class="flex flex-wrap lg:flex-nowrap gap-y-0 gap-x-12 items-center justify-center">
                             <li>
-                                <a 
-                                    href="https://react.dev/" 
+                                <a
+                                    href="https://react.dev/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="hover:opacity-50 cursor-pointer flex justify-center"
@@ -86,8 +86,8 @@ const { class: className, ...props } = Astro.props;
                                 </a>
                             </li>
                             <li>
-                                <a 
-                                    href="https://nextjs.org/" 
+                                <a
+                                    href="https://nextjs.org/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="hover:opacity-50 cursor-pointer flex justify-center"
@@ -97,8 +97,8 @@ const { class: className, ...props } = Astro.props;
                                 </a>
                             </li>
                             <li>
-                                <a 
-                                    href="https://astro.build/" 
+                                <a
+                                    href="https://astro.build/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="hover:opacity-50 cursor-pointer flex justify-center"
@@ -108,8 +108,8 @@ const { class: className, ...props } = Astro.props;
                                 </a>
                             </li>
                             <li>
-                                <a 
-                                    href="https://astro.build/" 
+                                <a
+                                    href="https://astro.build/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="hover:opacity-50 cursor-pointer flex justify-center"
@@ -171,20 +171,13 @@ const { class: className, ...props } = Astro.props;
                         <p class="text-xl mb-8">Ma soif d'apprentissage s'étend au-delà du web.</p>
                     </header>
                     <Planet />
-                    <!-- <<ul>
-                        <li><i class="fa-solid fa-meteor"></i> Cosmos</li>
-                        <li><i class="fa-solid fa-mountain-sun"></i> Escalade</li>
-                        <li><i class="fa-solid fa-person-hiking"></i> Randonnée</li>
-                        <li><i class="fa-solid fa-mug-hot"></i> Café</li>
-                        <li><i class="fa-solid fa-book"></i> Livres d'horreur</li>
-                    </ul>> -->
                 </section>
-                <section class="min-h-screen flex items-center gap-8 justify-content-center">
-                    <h2 class="text-7xl uppercase text-right mb-2 font-bold w-1/2">
+                <section class="min-h-screen flex items-center flex-wrap md:flex-nowrap gap-8 justify-content-center">
+                    <h2 class="text-7xl uppercase text-left md:text-right mb-2 font-bold w-1/2">
                         Fun<br />
                         Facts
                     </h2>
-                    <ul class="text-xl w-1/2">
+                    <ul class="text-xl grow md:w-1/2">
                         <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> J'ai deux chats</li>
                         <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> J'ai joué dans Macaroni tout garni</li>
                         <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> Je mangerais du tartare tous les jours</li>
@@ -192,6 +185,9 @@ const { class: className, ...props } = Astro.props;
                         <li class="flex items-center"><i class="fa-solid fa-chevron-right text-xs mr-2"></i> Mon jeu préféré est <a class="ml-1 underline" target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Bloodborne">Bloodborne</a></li>
                     </ul>
                 </section>
+                <footer class="text-center">
+                    Voir les projets
+                </footer>
             </div>
         </Fragment>
     </Expandable>

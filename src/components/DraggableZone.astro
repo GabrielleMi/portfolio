@@ -1,8 +1,9 @@
 <div data-draggable-zone class="h-full w-full">
-    <slot />
+	<slot />
 </div>
 <script>
     const draggableZones = document.querySelectorAll<HTMLDivElement>("[data-draggable-zone]");
+    const TIMEOUT_MS = 100;
 
     draggableZones.forEach((zone) => {
         const draggableItems = zone.querySelectorAll<HTMLDivElement>("[data-draggable]");
@@ -22,16 +23,16 @@
             function getAllowedPositions({ x, y }: { x: number, y: number }) {
                 const clamp = (val: number, min: number, max: number) => {
                     return Math.min(Math.max(val, min), max);
-                }
+                };
 
                 return {
-                    top: Math.max(y, 0),
                     left: clamp(
                         x,
-                        0,
-                        zone.offsetWidth - draggable.offsetWidth
-                    )
-                }
+                        zone.offsetLeft,
+                        (zone.offsetLeft + zone.offsetWidth) - draggable.offsetWidth
+                    ),
+                    top: Math.max(y, zone.offsetTop)
+            };
             }
 
             function onMouseMove(e: MouseEvent) {
@@ -42,47 +43,31 @@
                     // TODO: calc in percentage for responsiveness
                     const deltaX = posX - e.clientX;
                     const deltaY = posY - e.clientY;
-                    const { top, left } = getAllowedPositions({
-                        y: draggable.offsetTop - deltaY,
-                        x: draggable.offsetLeft - deltaX
+                    const positions = getAllowedPositions({
+                        x: draggable.offsetLeft - deltaX,
+                        y: draggable.offsetTop - deltaY
                     });
-                    
-                    posX = e.clientX;
-                    posY = e.clientY;
-                    draggable.style.top = `${top}px`;
-                    draggable.style.left = `${left}px`;
-                });
-            }
 
-            function onMouseDown(e: MouseEvent) {
-                if(!draggable.hasAttribute("data-expanded")) {
-                    cancelTimeouts();
-                    
                     posX = e.clientX;
                     posY = e.clientY;
-    
-                    timeout = window.setTimeout(() => {
-                        draggable.setAttribute("data-dragging", "");
-                        document.addEventListener("mousemove", onMouseMove);
-                    }, 100);
-    
-                    document.addEventListener("mouseup", onMouseUp);
-                }
+                    draggable.style.top = `${positions.top}px`;
+                    draggable.style.left = `${positions.left}px`;
+                });
             }
 
             function expandItem() {
                 draggable.setAttribute("data-expanded", "");
-                
+
                 const closeBtn = draggable.querySelector("[data-expandable-close]");
 
                 const onCloseExpand = () => {
                     draggable.removeAttribute("data-expanded");
-                    closeBtn.removeEventListener("click", onCloseExpand)
-                }
+                    closeBtn.removeEventListener("click", onCloseExpand);
+                };
 
-                closeBtn.addEventListener("click", onCloseExpand)
+                closeBtn.addEventListener("click", onCloseExpand);
             }
-            
+
             function onMouseUp() {
                 cancelTimeouts();
 
@@ -93,7 +78,7 @@
                         draggable.id,
                         JSON.stringify({
                             x: parseInt(draggable.style.left),
-                            y: parseInt(draggable.style.top),
+                            y: parseInt(draggable.style.top)
                         })
                     );
 
@@ -105,22 +90,38 @@
                 document.removeEventListener("mousemove", onMouseMove);
             }
 
+            function onMouseDown(e: MouseEvent) {
+                if(!draggable.hasAttribute("data-expanded")) {
+                    cancelTimeouts();
+
+                    posX = e.clientX;
+                    posY = e.clientY;
+
+                    timeout = window.setTimeout(() => {
+                        draggable.setAttribute("data-dragging", "");
+                        document.addEventListener("mousemove", onMouseMove);
+                    }, TIMEOUT_MS);
+
+                    document.addEventListener("mouseup", onMouseUp);
+                }
+            }
+
             function initDraggable() {
                 const storagePos = window.sessionStorage.getItem(draggable.id);
-                const { top, left } = getAllowedPositions(
+                const positions = getAllowedPositions(
                     storagePos ?
                         JSON.parse(storagePos)
                         :
                         {
-                            y: draggable.offsetTop,
-                            x: draggable.offsetLeft
+                            x: draggable.offsetLeft,
+                            y: draggable.offsetTop
                         }
                 );
 
                 draggable.style.width = `${draggable.offsetWidth}px`;
                 draggable.style.height = `${draggable.offsetHeight}px`;
-                draggable.style.top = `${top}px`;
-                draggable.style.left = `${left}px`;
+                draggable.style.top = `${positions.top}px`;
+                draggable.style.left = `${positions.left}px`;
 
                 draggable.addEventListener("mousedown", onMouseDown);
             }

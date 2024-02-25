@@ -1,5 +1,5 @@
 ---
-import Switch from "../components/Switch.astro";
+import Switch from "../components/theme/Switch.astro";
 ---
 
 <nav class="bg-primary-900 shadow-xl">
@@ -11,7 +11,15 @@ import Switch from "../components/Switch.astro";
 		<li class="text-2xl leading-none">
 			<button data-contact-control type="button" class="hover:text-highlight transition-colors fa-solid fa-comment" />
 		</li>
-		<li class="text-2xl leading-none"><i class="hover:text-highlight transition-colors fa-brands fa-github"></i></li>
+		<li class="text-2xl leading-none">
+			<a
+				href="https://github.com/GabrielleMi"
+				rel="noopener noreferrer"
+				target="_blank"
+				title="Github"
+				class="hover:text-highlight transition-colors fa-brands fa-github"
+			/>
+		</li>
 		<li class="text-2xl leading-none"><i class="hover:text-highlight transition-colors fa-brands fa-linkedin-in"></i></li>
 	</ul>
 </nav>
