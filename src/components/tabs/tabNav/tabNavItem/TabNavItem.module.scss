@@ -1,0 +1,34 @@
+@use "../../../../styles/variables" as v;
+@use "sass:math";
+@use "sass:map";
+@use "sass:color";
+
+.btn {
+	background-color: v.$light;
+	border: none;
+	border-top-left-radius: math.div(v.$border-radius-sm, 1.25);
+	border-top-right-radius: math.div(v.$border-radius-sm, 1.25);
+	font-size: 0.75rem;
+	margin-bottom: -(v.$border-radius-sm);
+	padding:
+		map.get(v.$spacers, "sm")
+		map.get(v.$spacers, "sm")
+		(v.$border-radius-sm + map.get(v.$spacers, "sm"))
+		map.get(v.$spacers, "sm");
+	position: relative;
+	z-index: -1;
+
+	&Container {
+		cursor: pointer;
+	}
+
+	&:not(.isActive):hover,
+	&Container:hover &:not(.isActive) {
+		background-color: color.adjust(v.$light, $lightness: -10%);
+	}
+
+	&.isActive {
+		background-color: v.$black;
+		color: v.$white;
+	}
+}

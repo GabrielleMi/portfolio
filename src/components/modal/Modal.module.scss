@@ -1,0 +1,37 @@
+@use "sass:map";
+@use "../../styles/variables" as v;
+
+.container {
+	bottom: 0;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	margin: 0 auto;
+	overflow: auto;
+	padding-bottom: v.$spacer;
+	padding-top: v.$spacer;
+	position: fixed;
+	right: 0;
+	top: 0;
+	transition: backdrop-filter 0.15s ease-in-out;
+	z-index: 100;
+
+	&.isOpen {
+		backdrop-filter: blur(5px);
+	}
+}
+
+.inner {
+	border-radius: 1rem;
+	box-shadow: -2px 2px 10px rgba(v.$black, 0.2);
+	margin: auto;
+	max-width: min(500px, 66vw);
+	overflow: hidden;
+	position: relative;
+}
+
+.close {
+	position: absolute;
+	right: 0;
+	top: 0;
+}

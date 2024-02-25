@@ -1,0 +1,38 @@
+@use "../../styles/variables" as v;
+
+.container {
+	background-color: v.$black;
+	box-shadow: v.$box-shadow;
+	height: 500px;
+	margin: 0;
+	overflow: hidden;
+	tab-size: 4;
+	width: 100%;
+
+	&Inner {
+		box-sizing: border-box;
+		display: block;
+		height: 100%;
+		overflow: auto;
+		padding: v.$spacer;
+		scrollbar-color: rgba(v.$light, 0.75) v.$black;
+		scrollbar-width: thin;
+		width: 100%;
+
+		&::-webkit-scrollbar {
+			height: 8px;
+			width: 8px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background: rgba(v.$light, 0.75);
+			border: 2px solid v.$black;
+			border-radius: 100px;
+			box-shadow: 0 0 2px v.$black;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: v.$black;
+		}
+	}
+}
