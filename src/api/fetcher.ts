@@ -15,6 +15,10 @@ function postRequest(requestInfo: FetchParameters[0], requestInit: PostRequestIn
     return fetcher(
         requestInfo,
         {
+            headers: {
+                ...requestInit?.headers,
+                'Origin': 'https://gabriellemi.github.io'
+            },
             ...requestInit,
             body: JSON.stringify(requestInit.body),
             method: METHOD_POST
