@@ -18,7 +18,7 @@ function postRequest(requestInfo: FetchParameters[0], requestInit: PostRequestIn
             headers: {
                 ...requestInit?.headers,
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Origin': 'https://gabriellemi.github.io/'
+                'Origin': 'https://gabriellemi.github.io'
             },
             ...requestInit,
             body: JSON.stringify(requestInit.body),
