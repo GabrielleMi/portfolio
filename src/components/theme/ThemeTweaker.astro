@@ -1,0 +1,51 @@
+---
+import ColorPicker from "./ColorPicker.astro";
+---
+<code class="text-xs font-mono">
+    <span class="opacity-50">{`.portfolio.style {`}</span>
+    <span class="flex items-center">
+      &emsp;&emsp;
+      <span class="flex items-center flex-wrap">
+        <span class="opacity-75">background-color:</span>
+        <ColorPicker
+          class="ml-1"
+          id="main-950"
+          defaultVariant={900}
+          variants={[
+            // eslint-disable-next-line no-magic-numbers
+            950,
+            // eslint-disable-next-line no-magic-numbers
+            900,
+            // eslint-disable-next-line no-magic-numbers
+            800,
+            // eslint-disable-next-line no-magic-numbers
+            700
+          ]}
+          name="color-primary"
+        />
+      </span>
+    </span>
+    <span class="flex items-center">
+      &emsp;&emsp;
+      <span class="flex items-center flex-wrap">
+        <span class="opacity-75">color:</span>
+        <ColorPicker
+          class="ml-1"
+          id="main-950"
+          name="color-white"
+        />
+      </span>
+    </span>
+    <span class="flex items-center">
+      &emsp;&emsp;
+      <span class="flex items-center flex-wrap">
+        <span class="opacity-75">highlight:</span>
+        <ColorPicker
+          class="ml-1"
+          id="main-950"
+          name="color-highlight"
+        />
+      </span>
+    </span>
+    <span class="opacity-50">{"}"}</span>
+  </code>

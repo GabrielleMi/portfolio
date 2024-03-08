@@ -1,0 +1,36 @@
+---
+import Aside from '../layouts/Aside.astro';
+import Chat from '../components/chat/Chat.astro';
+import DocumentBase from '../layouts/DocumentBase.astro';
+import DraggableExpand from '../components/DraggableExpand.astro';
+import DraggableZone from '../components/DraggableZone.astro';
+import Nav from '../layouts/Nav.astro';
+import Profile from '../components/about/Profile.astro';
+---
+
+<DocumentBase
+	title="Gabrielle Michaud / Portfolio"
+	class="grid grid-cols-[18vw_auto] grid-rows-[auto_1fr] gap-2 relative"
+>
+	<header class="col-span-2">
+		<Nav />
+	</header>
+	<Aside />
+	<main id="main" class="h-full w-full">
+		<DraggableZone>
+			<!-- <DraggableExpand id="draggable-qualia">
+				<AstroImage
+					class="select-none"
+					src={QualiaPreviewImg}
+					width={290}
+					draggable={false}
+					alt="Qualia login interface"
+				/>
+			</DraggableExpand> -->
+			<DraggableExpand id="draggable-profile">
+				<Profile />
+			</DraggableExpand>
+		</DraggableZone>
+	</main>
+	<Chat />
+</DocumentBase>
