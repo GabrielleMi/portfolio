@@ -1,0 +1,26 @@
+---
+import { Image as AstroImage } from "astro:assets";
+import Expandable from "../../Expandable.astro";
+import QualiaPreviewImg from "../../../assets/images/qualia-preview.png";
+import Robot from "./Robot.astro";
+---
+
+<Expandable>
+    <Fragment slot="beforeExpand">
+        <AstroImage
+            class="select-none"
+            src={QualiaPreviewImg}
+            width={290}
+            draggable={false}
+            alt="Qualia login interface"
+        />
+    </Fragment>
+    <Fragment slot="afterExpand">
+        <header class="flex relative z-10 flex-col justify-center items-center py-8 text-center min-h-screen">
+            <p class="opacity-50">/projets/qualia</p>
+            <h1 class="text-7xl font-bold mb-1">Qualia</h1>
+            <p class="text-2xl">Projet d'école développé en 2018</p>
+        </header>
+        <Robot />
+    </Fragment>
+</Expandable>

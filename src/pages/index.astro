@@ -6,6 +6,7 @@ import DraggableExpand from '../components/DraggableExpand.astro';
 import DraggableZone from '../components/DraggableZone.astro';
 import Nav from '../layouts/Nav.astro';
 import Profile from '../components/about/Profile.astro';
+import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
 ---
 
 <DocumentBase
@@ -18,15 +19,9 @@ import Profile from '../components/about/Profile.astro';
 	<Aside />
 	<main id="main" class="h-full w-full">
 		<DraggableZone>
-			<!-- <DraggableExpand id="draggable-qualia">
-				<AstroImage
-					class="select-none"
-					src={QualiaPreviewImg}
-					width={290}
-					draggable={false}
-					alt="Qualia login interface"
-				/>
-			</DraggableExpand> -->
+			<DraggableExpand id="draggable-qualia">
+				<ProjectQualia />
+			</DraggableExpand>
 			<DraggableExpand id="draggable-profile">
 				<Profile />
 			</DraggableExpand>
