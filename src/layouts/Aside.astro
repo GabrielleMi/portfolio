@@ -1,0 +1,67 @@
+---
+import ColorPicker from "../components/theme/ColorPicker.astro";
+---
+
+<aside class="bg-primary-900 lg:flex hidden flex-col z-10 relative rounded-tr-xl p-6 shadow-xl">
+    <h2 class="mb-6">Theme Customizer</h2>
+    <div class="w-full border flex flex-col border-dashed border-current rounded mb-6 opacity-30 p-1" style="height:100px;">
+      <div class="w-full hover:bg-primary-700 border border-dashed border-current rounded h-1/6 mb-1" />
+      <div class="h-full hover:bg-primary-700 border border-dashed border-current rounded w-1/6" />
+    </div>
+    <code class="text-xs font-mono">
+      <span class="opacity-50">{`.portfolio {`}</span>
+      <span class="flex items-center">
+        &emsp;&emsp;
+        <span class="flex items-center flex-wrap">
+          <span class="opacity-75">background-color:</span>
+          <ColorPicker
+            class="ml-1"
+            id="main-950"
+            defaultVariant={900}
+            variants={[
+              // eslint-disable-next-line no-magic-numbers
+              950,
+              // eslint-disable-next-line no-magic-numbers
+              900,
+              // eslint-disable-next-line no-magic-numbers
+              800,
+              // eslint-disable-next-line no-magic-numbers
+              700,
+              // eslint-disable-next-line no-magic-numbers
+              600
+            ]}
+            name="color-primary"
+          />
+        </span>
+      </span>
+      <span class="flex items-center">
+        &emsp;&emsp;
+        <span class="flex items-center flex-wrap">
+          <span class="opacity-75">color:</span>
+          <ColorPicker
+            class="ml-1"
+            id="main-950"
+            name="color-white"
+          />
+        </span>
+      </span>
+      <span class="flex items-center">
+        &emsp;&emsp;
+        <span class="flex items-center flex-wrap">
+          <span class="opacity-75">highlight:</span>
+          <ColorPicker
+            class="ml-1"
+            id="main-950"
+            name="color-highlight"
+          />
+        </span>
+      </span>
+      <span class="opacity-50">{"}"}</span>
+    </code>
+    <footer class="mt-auto pt-3">
+		<small class="leading-none">
+      © 2024, Gabrielle Michaud<br />
+      <small>Made with Astro, React and Tailwind.</small>
+    </small>
+	</footer>
+</aside>

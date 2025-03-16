@@ -1,0 +1,68 @@
+---
+const { canExpand = true, id, position, ...props } = Astro.props;
+
+if(!id) {
+    console.warn("Missing id for draggable element");
+}
+
+---
+<div
+    data-draggable
+    data-position={position}
+    id={id}
+    {...(canExpand ? { ["data-expandable"]: "true" } : {})}
+    {...props}
+    class:list={[
+        "overflow-hidden",
+        "data-[dragging]:cursor-grabbing",
+        "data-[dragging]:bg-primary-700",
+        "hover:bg-primary-800",
+        "rounded-lg",
+        "bg-primary-900",
+        "z-50",
+        "absolute",
+        "shadow-lg"
+    ]}
+>
+    <slot />
+    <button
+        type="button"
+        data-draggable-btn
+        aria-label="Grab"
+        class="absolute opacity-50 top-0 right-0 cursor-grab fa-solid fa-grip mt-2 mr-2"
+    />
+    {canExpand &&
+        <button
+            type="button"
+            data-expandable-close
+            aria-label="Close"
+            class="absolute z-50 top-0 left-0 fa-solid text-xl fa-circle-xmark p-6 cursor-pointer"
+        />
+    }
+</div>
+<style>
+    [data-draggable] {
+        box-shadow: -0.5rem 0.5rem 2rem rgb(var(--color-highlight) / 0.05) !important;
+    }
+
+    [data-expanded] {
+        background: radial-gradient(rgb(var(--color-primary-900)), rgb(var(--color-primary-950)));
+        z-index: 1000;
+    }
+
+    :not([data-expanded]) [data-expandable-close] {
+        display: none;
+    }
+
+    [data-draggable]:not([data-expanded]) {
+        cursor: pointer;
+    }
+    [data-draggable]:not([data-expanded]):hover,
+    [data-draggable]:not([data-expanded])[data-dragging] {
+        z-index: 100;
+    }
+
+    [data-expanded] [data-draggable-btn] {
+        display: none;
+    }
+</style>

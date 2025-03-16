@@ -1,0 +1,77 @@
+---
+import { Image as AstroImage } from "astro:assets";
+import Expandable from "../../Expandable.astro";
+import QualiaPreviewImg from "../../../assets/images/qualia-preview.png";
+import Robot from "./Robot.astro";
+---
+
+<Expandable
+    afterProps={{
+        id: 'qualia-details'
+    }}
+>
+    <Fragment slot="beforeExpand">
+        <AstroImage
+            class="unselectable"
+            src={QualiaPreviewImg}
+            width={290}
+            draggable={false}
+            alt="Qualia login interface"
+        />
+    </Fragment>
+    <Fragment slot="afterExpand">
+        <header class="flex relative z-10 flex-col justify-center items-center py-8 text-center min-h-screen">
+            <p class="opacity-50">/projets/qualia</p>
+            <h1 class="text-7xl font-extrabold uppercase mb-1">Qualia</h1>
+            <p class="text-2xl">Jeu vidéo développé à l'école en 2018</p>
+        </header>
+        <Robot />
+        <section id="qualia-description" class="min-h-screen flex flex-col justify-center container py-8">
+            <h2 id="qualia-description-title" class="text-8xl mb-2 font-extrabold uppercase concept-title">Concept</h2>
+            <div class="lg:max-w-[50%]">
+                <figure class="text-xs opacity-50 mb-4">
+                    <blockquote cite="https://fr.wikipedia.org/wiki/Qualia">
+                        Les qualia (prononcé /kwa.lja/, au singulier <i>quale</i>, du latin <i>qualis</i> qui signifie <i>quel, de quelle sorte, de quelle espèce, de quelle nature</i>) sont le contenu subjectif de l'expérience d'un état mental.
+                    </blockquote>
+                    <figcaption>
+                        <cite>— <a href="https://fr.wikipedia.org/wiki/Qualia" target="_blank" rel="noopener noreferrer">Wikipedia</a></cite>
+                    </figcaption>
+                </figure>
+                <p class="text-xl">Qualia est un jeu de plateforme en défilement latéral en 3D. Le joueur incarne un robot qu'il peut clôner afin de compléter des puzzles générés de façon procédurale.</p>
+            </div>
+        </section>
+        <section class="min-h-screen container py-8">
+            <iframe class="overflow-hidden rounded-xl relative z-10 aspect-video" width="100%" src="https://www.youtube.com/embed/7c-0dlikEig?si=7lZyaRjSL0iyDpvz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </section>
+    </Fragment>
+</Expandable>
+<style>
+    .concept-title {
+        --title-offset: 0em;
+        --title-offset-2: calc(var(--title-offset) * 2);
+
+        text-shadow:
+            0 var(--title-offset-2) 0 rgb(var(--color-white) / 0.1),
+            0 var(--title-offset) 0 rgb(var(--color-white) / 0.3);
+    }
+</style>
+<script>
+    const qualiaDetails = document.getElementById("qualia-details") as HTMLDivElement;
+    const description = qualiaDetails.querySelector<HTMLElement>('#qualia-description');
+    const title = description.querySelector<HTMLHeadingElement>('#qualia-description-title');
+
+    const DISTANCE_MAX = 1;
+    const DISTANCE_STEP = DISTANCE_MAX / description.offsetTop;
+    const DISTANCE_DIRECTION = -1;
+
+    const handleOnScroll = (e: Event) => {
+        const target = e.target as HTMLDivElement;
+        const scrollTop = target.scrollTop;
+        const shadowDistance = Math.min(scrollTop * DISTANCE_STEP, DISTANCE_MAX) * DISTANCE_DIRECTION;
+
+        title.style.setProperty('--title-offset', `${shadowDistance}em`);
+    };
+
+    qualiaDetails.addEventListener('scroll', handleOnScroll);
+
+</script>

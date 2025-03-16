@@ -1,0 +1,155 @@
+<div data-draggable-zone class="h-full w-full">
+	<slot />
+</div>
+<script>
+    const draggableZones = document.querySelectorAll<HTMLDivElement>("[data-draggable-zone]");
+    const TIMEOUT_MS = 200;
+
+    draggableZones.forEach((zone) => {
+        const draggableItems = zone.querySelectorAll<HTMLDivElement>("[data-draggable]");
+
+        draggableItems.forEach((draggable) => {
+            const initPos = draggable.getAttribute('data-position');
+            let timeout: number;
+            let animationFrame: number;
+
+            let posX = 0;
+            let posY = 0;
+
+            function cancelTimeouts() {
+                window.cancelAnimationFrame(animationFrame);
+                window.clearTimeout(timeout);
+            }
+
+            function getAllowedPositions({ x, y }: { x: number, y: number }) {
+                const clamp = (val: number, min: number, max: number) => {
+                    return Math.min(Math.max(val, min), max);
+                };
+
+                return {
+                    left: clamp(
+                        x,
+                        zone.offsetLeft,
+                        (zone.offsetLeft + zone.offsetWidth) - draggable.offsetWidth
+                    ),
+                    top: Math.max(y, zone.offsetTop)
+            };
+            }
+
+            function onMouseMove(e: MouseEvent) {
+                e.preventDefault();
+                cancelTimeouts();
+
+                animationFrame = window.requestAnimationFrame(function () {
+                    // TODO: calc in percentage for responsiveness
+                    const deltaX = posX - e.clientX;
+                    const deltaY = posY - e.clientY;
+                    const positions = getAllowedPositions({
+                        x: draggable.offsetLeft - deltaX,
+                        y: draggable.offsetTop - deltaY
+                    });
+
+                    posX = e.clientX;
+                    posY = e.clientY;
+
+                    draggable.style.top = `${positions.top}px`;
+                    draggable.style.left = `${positions.left}px`;
+                });
+            }
+
+            function expandItem() {
+                draggable.setAttribute("data-expanded", "");
+
+                const closeBtn = draggable.querySelector("[data-expandable-close]");
+
+                const onCloseExpand = () => {
+                    draggable.removeAttribute("data-expanded");
+                    closeBtn.removeEventListener("click", onCloseExpand);
+                };
+
+                closeBtn.addEventListener("click", onCloseExpand);
+            }
+
+            function onMouseUp() {
+                cancelTimeouts();
+
+                if(draggable.hasAttribute("data-dragging")) {
+                    draggable.removeAttribute("data-dragging");
+                } else if(draggable.hasAttribute("data-expandable")) {
+                    expandItem();
+                }
+
+                document.removeEventListener("mouseup", onMouseUp);
+                document.removeEventListener("mousemove", onMouseMove);
+            }
+
+            function onMouseDown(e: MouseEvent) {
+                if(!draggable.hasAttribute("data-expanded")) {
+                    cancelTimeouts();
+
+                    posX = e.clientX;
+                    posY = e.clientY;
+
+                    timeout = window.setTimeout(() => {
+                        draggable.setAttribute("data-dragging", "");
+                        document.addEventListener("mousemove", onMouseMove);
+                    }, TIMEOUT_MS);
+
+                    document.addEventListener("mouseup", onMouseUp);
+                }
+            }
+
+            function getInitialPosition() {
+                if(initPos === 'center') {
+                    return {
+                        x: ((zone.offsetLeft + zone.offsetWidth) / 2),
+                        y: ((zone.offsetTop + zone.offsetHeight) / 2) - (draggable.offsetHeight / 2)
+                    };
+                }
+
+                if(initPos === 'right') {
+                    return {
+                        x: zone.offsetLeft + zone.offsetWidth - draggable.offsetWidth,
+                        y: draggable.offsetTop
+                    };
+                }
+
+                return {
+                    x: draggable.offsetLeft,
+                    y: draggable.offsetTop
+                };
+            }
+
+            function initDraggable() {
+                const positions = getAllowedPositions(getInitialPosition());
+
+                draggable.style.width = `${draggable.offsetWidth}px`;
+                draggable.style.height = `${draggable.offsetHeight}px`;
+                draggable.style.top = `${positions.top}px`;
+                draggable.style.left = `${positions.left}px`;
+
+                draggable.addEventListener("mousedown", onMouseDown);
+            }
+
+            initDraggable();
+        });
+    });
+</script>
+<style is:global>
+    [data-expandable]:not([data-dragging]) {
+        transition:
+            top 0.15s ease-out,
+            bottom 0.15s ease-out,
+            left 0.15s ease-out,
+            right 0.15s ease-out,
+            background-color 0.15s ease-out,
+            width 0.15s ease-out;
+    }
+
+    [data-expanded] {
+        left: 0 !important;
+        height: 100% !important;
+        top: 0 !important;
+        width: 100% !important;
+    }
+</style>

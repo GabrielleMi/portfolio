@@ -1,0 +1,31 @@
+---
+const { class: className, useVariant } = Astro.props;
+---
+<svg
+    class:list={[className]}
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 1582.34 1226.68"
+>
+    <defs>
+        <style>
+            .cls-1 {
+                fill: url(#linear-gradient);
+                stroke-width: 0px;
+            }
+
+            .stop {
+                stop-color: rgb(var(--color-highlight));
+            }
+        </style>
+        <linearGradient id="linear-gradient" x1="616.21" y1="470.73" x2="1042.4" y2="1079.02" gradientUnits="userSpaceOnUse">
+            <stop class="stop" offset=".02" stop-opacity=".035"/>
+            <stop class="stop" offset=".46" stop-opacity="0"/>
+        </linearGradient>
+    </defs>
+    {useVariant ?
+        <path class="cls-1" d="M1292.45,0c88.39-.39,169.67,47.77,212.34,125.18,97.13,176.16,252.41,340.02-386.5,652.99C-229.46,1438.37-17.62,849.79,61.29,681.16c129.13-275.94,275.11-221.1,433.98-174.83,157.79,45.96,191.49-314.04,413.62-205.28,67.32,32.97,101.11,32.17,132.38-51.44C1082.56,139.25,1173.95.53,1291.79,0h.66Z"/>
+        :
+        <path class="cls-1" d="M108.73,857.9c318.76-13.71,347-260,344-331s69-251,319-246,252-136,252-136c0,0-5-202,196-129s732.34,553.81-54,939C-182.03,1615.1-77.27,865.9,108.73,857.9Z"/>
+    }
+</svg>

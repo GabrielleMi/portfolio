@@ -1,0 +1,151 @@
+---
+const { variants, defaultVariant, class: className, ...props } = Astro.props;
+if(!props.id) {
+    console.error("Color picker needs an id");
+}
+if(!props.name) {
+    console.error("Color picker needs a name");
+}
+---
+<label
+    style={`color:rgb(var(--${props.name}${defaultVariant ? `-${defaultVariant}` : ""}));`}
+    class:list={[
+        "relative before:rounded-sm cursor-pointer before:shadow before:border before:border-black before:dark:border-white before:overflow-hidden",
+        "color-picker flex items-center before:mr-1",
+        className
+    ]}
+    data-color-picker
+    data-default={defaultVariant}
+    data-variants={variants ? variants.join(',') : ""}
+>
+    <input
+        data-color-picker-input
+        type="color"
+        {...props}
+        class="absolute inset-0 invisible"
+    />
+    <code data-color-picker-label class="text-black text-nowrap dark:text-white">...;</code>
+</label>
+<style>
+    .color-picker::before {
+        background-color: currentColor;
+        content: "";
+        display: block;
+        width: 0.7em;
+        height: 0.7em;
+    }
+</style>
+<script>
+    const MAX_COLOR_INT = 255;
+
+    function getLowestMiddleHighest(rgb: [ number, number, number ]) {
+
+        const highest = { index: -1, val: -1 };
+        const lowest = { index: -1, val: Infinity };
+
+        rgb.forEach((val, theIndex) => {
+            if(val > highest.val){
+                highest.val = val;
+                highest.index = theIndex;
+            }
+
+            if(val < lowest.val){
+                lowest.val = val;
+                lowest.index = theIndex;
+            }
+        });
+
+        if(lowest.index === highest.index){
+            lowest.index = highest.index + 1;
+        }
+
+        const index = (rgb.length - highest.index - lowest.index);
+        const middle = {
+            index,
+            val: rgb[index]
+        };
+
+        return [ lowest, middle, highest ];
+    }
+
+    function hexToRgb(hex: string): [ number, number, number ]{
+        // @ts-expect-error Because
+        return hex.replace(
+            /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+            (_, r, g, b) => `#${r}${r}${g}${g}${b}${b}`
+        )
+            .substring(1).match(/.{2}/g)
+            .map((x) => parseInt(x, 16));
+    }
+
+    function adjustBrightness(rgb: [ number, number, number ], percentage: number) {
+        // eslint-disable-next-line no-magic-numbers
+        const fract = MAX_COLOR_INT * percentage / 100;
+        const [ lowest, middle, highest ] = getLowestMiddleHighest(rgb);
+
+        if(lowest.val === MAX_COLOR_INT){
+            return rgb;
+        }
+
+        const newRgb = [];
+        // First work out increase on lower value
+        newRgb[lowest.index] = Math.round(lowest.val + (Math.min(MAX_COLOR_INT - lowest.val, fract)));
+
+        // Then apply to the middle and higher values
+        const increaseFraction = (newRgb[lowest.index] - lowest.val) / (MAX_COLOR_INT - lowest.val);
+        newRgb[middle.index] = middle.val + (MAX_COLOR_INT - middle.val) * increaseFraction;
+        newRgb[highest.index] = highest.val + (MAX_COLOR_INT - highest.val) * increaseFraction;
+
+        return newRgb;
+    }
+
+    const colorPickers = document.querySelectorAll("[data-color-picker]");
+
+    colorPickers.forEach((colorPicker: HTMLLabelElement) => {
+        const colorPickerInput = colorPicker.querySelector("[data-color-picker-input]") as HTMLInputElement;
+        const colorPickerLabel = colorPicker.querySelector("[data-color-picker-label]") as HTMLSpanElement;
+
+        const variants = colorPicker.getAttribute("data-variants");
+        const cssVarName = `--${colorPickerInput.name}`;
+
+        const setMainColorValue = (fullCssVarName: string, val: string) => {
+            document.body.style.setProperty(fullCssVarName, val);
+            colorPickerLabel.innerHTML = `rgb(${val});`;
+        };
+
+        const handleOnChange = (e) => {
+            const rgb = hexToRgb(e.target.value);
+
+            if(variants) {
+                const defaultVariant = colorPicker.getAttribute("data-default");
+                const splitVariants = variants.split(",");
+                const defaultIndex = splitVariants.findIndex((variant) => variant === defaultVariant);
+
+                if(defaultVariant) {
+                    setMainColorValue(`${cssVarName}-${defaultVariant}`, rgb.join(' '));
+                } else {
+                    setMainColorValue(cssVarName, rgb.join(' '));
+                }
+
+                splitVariants.forEach((variant, i) => {
+                    if(variant !== defaultVariant) {
+                        const deltaI = defaultIndex === -1 ? i : i - defaultIndex;
+
+                        // eslint-disable-next-line no-magic-numbers
+                        const adjustColor = adjustBrightness(rgb, 8 * deltaI);
+                        document.body.style.setProperty(`${cssVarName}-${variant}`, adjustColor.join(' '));
+                    }
+                });
+
+            } else {
+                setMainColorValue(cssVarName, rgb.join(' '));
+            }
+        };
+
+        const computedStyles = getComputedStyle(colorPicker);
+        const cssVarValue = computedStyles.getPropertyValue(cssVarName).trim();
+        console.log(cssVarName, cssVarValue);
+        colorPickerLabel.innerHTML = `rgb(${cssVarValue});`;
+        colorPickerInput.addEventListener("change", handleOnChange);
+    });
+</script>

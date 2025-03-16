@@ -1,0 +1,25 @@
+---
+import Switch from "../components/theme/Switch.astro";
+---
+
+<nav class="bg-primary-900 shadow-xl">
+	<ul class="mx-auto px-6 flex items-center py-6 gap-5">
+		<li class="text-2xl flex items-center leading-none text-nowrap mr-auto">
+            /Portfolio/<strong>Gabrielle_Michaud</strong> <small class="bg-primary-800 text-xs ml-3 px-2 shadow-sm rounded-full">2.0.0</small>
+		</li>
+		<li class="text-2xl leading-none"><Switch /></li>
+		<!-- <li class="text-2xl leading-none">
+			<button data-contact-control type="button" class="hover:text-highlight transition-colors fa-solid fa-comment" />
+		</li> -->
+		<li class="text-2xl leading-none">
+			<a
+				href="https://github.com/GabrielleMi"
+				rel="noopener noreferrer"
+				target="_blank"
+				title="Github"
+				class="hover:text-highlight transition-colors fa-brands fa-github"
+			/>
+		</li>
+		<!-- <li class="text-2xl leading-none"><i class="hover:text-highlight transition-colors fa-brands fa-linkedin-in"></i></li> -->
+	</ul>
+</nav>

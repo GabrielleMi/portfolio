@@ -1,0 +1,151 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'div'> {
+    size?: number,
+    sections: Array<{
+        value: number
+        color?: string
+        class?: string
+    }>
+}
+const DEGREES_IN_CIRCLE = 360;
+const { sections, size = 400, class: classAttribute, ...attributes } = Astro.props;
+const { total, minValue, maxValue } = sections.reduce((infos, { value }) => {
+	infos.total = infos.total + value;
+
+	if(!infos.minValue || infos.minValue > value) {
+		infos.minValue = value;
+	}
+
+	if(!infos.maxValue || infos.maxValue < value) {
+		infos.maxValue = value;
+	}
+
+	return infos;
+}, { maxValue: null, minValue: null, total: 0 });
+
+const convertToDegrees = (value: number, totalValues: number) => {
+	return Math.ceil((value / totalValues) * DEGREES_IN_CIRCLE);
+};
+
+const scaleValue = (value: number, minScale: number = 85, maxScale: number = 95) => {
+	// Normalize the value to a 0-1 range
+	const normalized = (value - minValue) / (maxValue - minValue);
+
+	// Scale the normalized value to the desired range
+	return normalized * (maxScale - minScale) + minScale;
+};
+
+const formattedSections = sections.reduce((formatted, section) => {
+	const fullDegrees = formatted.reduce((totalDegrees, { degree }) => totalDegrees + degree, 0);
+
+	formatted.push({
+		...section,
+		degree: convertToDegrees(section.value, total),
+		rotation: fullDegrees,
+		scale: scaleValue(section.value)
+	});
+
+	return formatted;
+}, []);
+
+const convertStylesToString = (styles) => {
+	return Object.entries(styles || {}).reduce((styleStr, [ property, value ]) => {
+		return `${styleStr}${property}:${value};`;
+	}, "");
+};
+
+---
+<div
+	{...attributes}
+	style={convertStylesToString({
+		"--pie-size": `${size}px`
+	})}
+	class:list={[
+		classAttribute,
+		"pie",
+		"rounded-full overflow-hidden"
+	]}
+>
+	{formattedSections.map((section, i) => {
+		return (
+			<div
+				data-pie-slice
+				data-degree={section.rotation + section.degree}
+				style={convertStylesToString({
+					"--pie-slice-color": `${section.color}`,
+					"--pie-slice-degree": "0deg",
+					"--pie-slice-size": `${section.scale}%`,
+					"--pie-slice-z-index": `${formattedSections.length - i}`
+				})}
+				class:list={[
+					section.class,
+					"slice"
+				]}
+			/>
+		);
+	})}
+</div>
+<script>
+    const slices = document.querySelectorAll<HTMLDivElement>('[data-pie-slice]');
+
+	function easeOut(t: number) {
+		return --t * t * t + 1;
+	}
+
+
+    slices.forEach((slice) => {
+    	const degree = parseInt(slice.getAttribute("data-degree"));
+
+    	function animateDegree(duration: number = 750) {
+    		const startTime = performance.now();
+
+    		function animate(time: number) {
+    			const elapsedTime = time - startTime;
+    			const progress = Math.min(elapsedTime / duration, 1);
+    			const easedProgress = easeOut(progress);
+    			const currentDegree = degree * easedProgress;
+
+    			slice.style.setProperty("--pie-slice-degree", `${currentDegree}deg`);
+
+    			if(progress < 1) {
+    				requestAnimationFrame(animate);
+    			}
+    		}
+
+    		requestAnimationFrame(animate);
+    	}
+
+
+    	animateDegree();
+    });
+</script>
+<style>
+    .pie {
+        height: var(--pie-size);
+        position: relative;
+        width: var(--pie-size);
+    }
+
+    .slice {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        right: 0;
+        bottom: 0;
+        height: var(--pie-slice-size);
+        width: var(--pie-slice-size);
+        border-radius: 10000px;
+        overflow: hidden;
+        z-index: var(--pie-slice-z-index);
+        mask-image: conic-gradient(
+            #000 0 var(--pie-slice-degree),
+            transparent var(--pie-slice-degree) 360deg
+        );
+        background: var(--pie-slice-color);
+        transform-origin: center;
+        transition: height 0.15s ease-out, width 0.15s ease-out;
+    }
+</style>
