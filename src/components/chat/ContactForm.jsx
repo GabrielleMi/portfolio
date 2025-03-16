@@ -9,8 +9,9 @@ import {
     getReadingSimulationTime,
     splitIntoParagraphs
 } from "./contactUtils";
-import { useEffect, useRef, useState } from "react";
-import { delay } from "../../helpers/utils";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { delay, isEqualCi } from "../../helpers/utils";
+import { ENTER_KEY } from "../../helpers/constants";
 import { fetchMessage } from "../../api/openAi";
 import { string } from "yup";
 
@@ -42,11 +43,22 @@ export default function ContactForm() {
     const [ messages, setMessages ] = useState([]);
     const [ email, setEmail ] = useState(INIT_EMAIL);
     const [ input, setInput ] = useState("");
+    const [ isLocked, setIsLocked ] = useState(false);
+    const [ hasResetOnce, setHasResetOnce ] = useState(false);
 
     const stepData = EMAIL_STEPS_DATA.data[email.step] || {};
 
     const handleOnInput = (e) => {
         setInput(e.target.value);
+    };
+
+    const resetChat = () => {
+        setHasResetOnce(true);
+        setMessages([]);
+        setIsLocked(false);
+        setEmail(INIT_EMAIL);
+        setInput("");
+        setMode("");
     };
 
     /**
@@ -151,7 +163,6 @@ export default function ContactForm() {
      * @param {Message} msg
      */
     const proceedWithDiscuss = (msg) => {
-        // TODO: calc in percentage for responsiveness
         // Prevent abuse
         // Offer a refresh option
         setIsTyping(true);
@@ -160,7 +171,7 @@ export default function ContactForm() {
             .then(async (res) => {
                 const responseMessage = res.choices[0].message;
                 const toolCalls = responseMessage.tool_calls || [];
-                const toolContact = toolCalls.find((tool) => tool.function.name === MODE_CONTACT.toLowerCase());
+                const toolContact = toolCalls.find((tool) => isEqualCi(tool.function.name, MODE_CONTACT));
 
                 if(toolContact) {
                     toggleContact();
@@ -186,7 +197,15 @@ export default function ContactForm() {
                     }
                 }
             })
-            .catch(console.error)
+            .catch((e) => {
+                console.error(e);
+                addMessage({
+                    content: "Désolée, une erreur est survenue. Veuillez réessayer plus tard ou me contacter directement: gabrielle.mi@hotmail.com.",
+                    id: generateId(),
+                    isError: true
+                });
+                setIsLocked(true);
+            })
             .finally(() => {
                 setIsTyping(false);
             });
@@ -205,7 +224,7 @@ export default function ContactForm() {
         if(mode === MODE_CONTACT) {
             await readMessage(msgContent);
 
-            if(msgContent.toLowerCase() === CMD_CANCEL) {
+            if(isEqualCi(msgContent, CMD_CANCEL)) {
                 toggleMode("", "Pas de problème! De quoi voulez-vous jaser?");
                 setEmail(INIT_EMAIL);
             } else {
@@ -215,7 +234,7 @@ export default function ContactForm() {
             return;
         }
 
-        if(msgContent.toLowerCase() === MODE_CONTACT.toLowerCase()) {
+        if(isEqualCi(msgContent, MODE_CONTACT)) {
             toggleContact();
         } else {
             setMode(MODE_DISCUSS);
@@ -245,29 +264,32 @@ export default function ContactForm() {
     return (
         <form
             className="contact-form shadow-xl rounded-lg bg-primary-800 relative flex flex-col"
-
         >
             <ul className="p-4 text-sm flex flex-col gap-1">
                 <ChatMessage className="bg-gradient-to-tr bg-primary-700">
                     <p>Bonjour!</p>
                     <p>Laissez-moi un message et nous pourrons aller discuter autour d&apos;un délicieux café. ☕</p>
                 </ChatMessage>
-                {messages.map((message) => (
-                    <ChatMessage
-                        className={
-                            message.role === MESSAGE_ROLE_USER ?
-                                "bg-gradient-to-tr from-blue-200 to-blue-300 dark:from-blue-400 dark:to-blue-500"
-                                :
-                                message.isError ?
-                                    "bg-gradient-to-tl from-red-200 to-red-300 dark:from-red-400 dark:to-red-500"
+                {messages.map((message, i) => (
+                    <Fragment key={message.id}>
+                        <ChatMessage
+                            className={
+                                message.role === MESSAGE_ROLE_USER ?
+                                    "bg-gradient-to-tr from-blue-200 to-blue-300 dark:from-blue-400 dark:to-blue-500"
                                     :
-                                    "bg-gradient-to-tr bg-primary-700"
+                                    message.isError ?
+                                        "bg-gradient-to-tl from-red-200 to-red-300 dark:from-red-400 dark:to-red-500"
+                                        :
+                                        "bg-gradient-to-tr bg-primary-700"
+                            }
+                            isRight={message.role === MESSAGE_ROLE_USER}
+                        >
+                            {message.content}
+                        </ChatMessage>
+                        {(!hasResetOnce && i === messages.length - 1 && message.isError) &&
+                            <button className="opacity-50" onClick={resetChat} type="button">Réinitialiser</button>
                         }
-                        isRight={message.role === MESSAGE_ROLE_USER}
-                        key={message.id}
-                    >
-                        {message.content}
-                    </ChatMessage>
+                    </Fragment>
                 ))}
                 {isTyping ?
                     <ChatMessage className="bg-primary-700">
@@ -288,14 +310,14 @@ export default function ContactForm() {
                         id="message"
                         name="message"
                         onChange={handleOnInput}
-                        placeholder="Écrire..."
+                        placeholder={isLocked ? "Une erreur est survenue" : "Écrire..."}
                         type="text"
                         value={input}
                         {...stepData.inputProps}
                         className="w-full shadow px-2 rounded-lg bg-primary-700"
-                        disabled={isTyping}
+                        disabled={isTyping || isLocked}
                         onKeyDown={(e) => {
-                            if(e.code === "Enter") {
+                            if(e.code === ENTER_KEY) {
                                 e.preventDefault();
                                 e.stopPropagation();
 
@@ -308,7 +330,7 @@ export default function ContactForm() {
                     <button
                         aria-label="Envoyer"
                         className="fa-solid fa-paper-plane p-2 enabled:cursor-pointer disabled:opacity-50 enabled:hover:text-highlight transition-colors"
-                        disabled={!input}
+                        disabled={!input || isLocked}
                         id="send-message-btn"
                         onClick={() => validateMessage(input)}
                         type="button"

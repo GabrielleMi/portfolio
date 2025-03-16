@@ -1,11 +1,11 @@
 ---
 import Aside from '../layouts/Aside.astro';
-import Chat from '../components/chat/Chat.astro';
 import DocumentBase from '../layouts/DocumentBase.astro';
 import DraggableExpand from '../components/DraggableExpand.astro';
 import DraggableZone from '../components/DraggableZone.astro';
 import Nav from '../layouts/Nav.astro';
 import Profile from '../components/about/Profile.astro';
+import ProjectCJEMoulins from "../components/projects/cjeMoulins/ProjectCJEMoulins.astro";
 import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
 ---
 
@@ -22,10 +22,16 @@ import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
 			<DraggableExpand id="draggable-qualia">
 				<ProjectQualia />
 			</DraggableExpand>
-			<DraggableExpand id="draggable-profile">
+			<DraggableExpand position="right" id="draggable-cje">
+				<ProjectCJEMoulins />
+			</DraggableExpand>
+			<DraggableExpand position="center" id="draggable-profile">
 				<Profile />
 			</DraggableExpand>
+			<!-- <DraggableExpand id="draggable-budget">
+				<ProjectLetsBudget />
+			</DraggableExpand> -->
 		</DraggableZone>
 	</main>
-	<Chat />
+	<!-- <Chat /> -->
 </DocumentBase>

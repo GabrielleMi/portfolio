@@ -38,7 +38,7 @@ if(!props.name) {
 <script>
     const MAX_COLOR_INT = 255;
 
-function getLowestMiddleHighest(rgb: [ number, number, number ]) {
+    function getLowestMiddleHighest(rgb: [ number, number, number ]) {
 
         const highest = { index: -1, val: -1 };
         const lowest = { index: -1, val: Infinity };
@@ -101,7 +101,6 @@ function getLowestMiddleHighest(rgb: [ number, number, number ]) {
 
     const colorPickers = document.querySelectorAll("[data-color-picker]");
 
-
     colorPickers.forEach((colorPicker: HTMLLabelElement) => {
         const colorPickerInput = colorPicker.querySelector("[data-color-picker-input]") as HTMLInputElement;
         const colorPickerLabel = colorPicker.querySelector("[data-color-picker-label]") as HTMLSpanElement;
@@ -143,6 +142,10 @@ function getLowestMiddleHighest(rgb: [ number, number, number ]) {
             }
         };
 
+        const computedStyles = getComputedStyle(colorPicker);
+        const cssVarValue = computedStyles.getPropertyValue(cssVarName).trim();
+        console.log(cssVarName, cssVarValue);
+        colorPickerLabel.innerHTML = `rgb(${cssVarValue});`;
         colorPickerInput.addEventListener("change", handleOnChange);
     });
 </script>

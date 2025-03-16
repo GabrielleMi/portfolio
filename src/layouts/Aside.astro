@@ -2,14 +2,14 @@
 import ColorPicker from "../components/theme/ColorPicker.astro";
 ---
 
-<aside class="bg-primary-900 flex flex-col z-10 relative rounded-tr-xl p-6 shadow-xl">
+<aside class="bg-primary-900 lg:flex hidden flex-col z-10 relative rounded-tr-xl p-6 shadow-xl">
     <h2 class="mb-6">Theme Customizer</h2>
     <div class="w-full border flex flex-col border-dashed border-current rounded mb-6 opacity-30 p-1" style="height:100px;">
-      <div class="w-full border border-dashed border-current rounded h-1/6 mb-1" />
-      <div class="h-full border border-dashed border-current rounded w-1/6" />
+      <div class="w-full hover:bg-primary-700 border border-dashed border-current rounded h-1/6 mb-1" />
+      <div class="h-full hover:bg-primary-700 border border-dashed border-current rounded w-1/6" />
     </div>
     <code class="text-xs font-mono">
-      <span class="opacity-50">{`.portfolio.style {`}</span>
+      <span class="opacity-50">{`.portfolio {`}</span>
       <span class="flex items-center">
         &emsp;&emsp;
         <span class="flex items-center flex-wrap">
@@ -26,7 +26,9 @@ import ColorPicker from "../components/theme/ColorPicker.astro";
               // eslint-disable-next-line no-magic-numbers
               800,
               // eslint-disable-next-line no-magic-numbers
-              700
+              700,
+              // eslint-disable-next-line no-magic-numbers
+              600
             ]}
             name="color-primary"
           />

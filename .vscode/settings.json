@@ -5,5 +5,8 @@
         "astro", // Enable .astro
         "typescript", // Enable .ts
         "typescriptreact" // Enable .tsx
-    ]
+    ],
+    "editor.suggest.showFolders": true,
+    "explorer.compactFolders": true,
+    "files.enableTrash": true
 }

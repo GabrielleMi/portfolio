@@ -1,15 +1,16 @@
 ---
-const { canExpand = true, id, ...props } = Astro.props;
+const { canExpand = true, id, position, ...props } = Astro.props;
 
 if(!id) {
-    console.warn("Missing id for draggabe element");
+    console.warn("Missing id for draggable element");
 }
 
 ---
 <div
     data-draggable
+    data-position={position}
     id={id}
-    {...(canExpand ? { ["data-expandable"]: "" } : {})}
+    {...(canExpand ? { ["data-expandable"]: "true" } : {})}
     {...props}
     class:list={[
         "overflow-hidden",
@@ -51,6 +52,14 @@ if(!id) {
 
     :not([data-expanded]) [data-expandable-close] {
         display: none;
+    }
+
+    [data-draggable]:not([data-expanded]) {
+        cursor: pointer;
+    }
+    [data-draggable]:not([data-expanded]):hover,
+    [data-draggable]:not([data-expanded])[data-dragging] {
+        z-index: 100;
     }
 
     [data-expanded] [data-draggable-btn] {

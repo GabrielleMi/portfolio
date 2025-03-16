@@ -59,11 +59,11 @@ export function createComposer({ canvas, width, height }) {
 }
 
 export function createLights({ color }) {
-	const lightIntensity = 0.2;
-	const dirLight1Color = 0xC2DFFF;
+	const lightIntensity = 0.5;
+	const dirLight1Color = 0xff0000;
 	const dirLight2Color = 0xB22222;
 	const dirLight1Pos = {
-		x: -3,
+		x: -1,
 		y: 5,
 		z: -3
 	};
@@ -158,5 +158,58 @@ export function createBaseScene({ canvas, color, onAnimate }: {
 
 	window.addEventListener("resize", handleOnResize);
 
-	return { animate, killScene, mixer, scene };
+	return {
+		animate,
+		composer,
+		killScene,
+		mixer,
+		scene
+	};
 }
+
+// Custom shader pass for post-processing effect
+export const ghostingShader = {
+	fragmentShader: `
+		uniform sampler2D tDiffuse;
+		uniform float scrollOffset;
+		uniform int numGhosts;
+		uniform float ghostSpacing;
+		varying vec2 vUv;
+
+		void main() {
+			vec4 originalColor = texture2D(tDiffuse, vUv);
+			vec4 ghostColor = vec4(0.0);
+			vec2 offset = vec2(scrollOffset, 0.0); // Horizontal offset
+		
+			// Accumulate the colors of the ghost copies
+			for (int i = 1; i <= numGhosts; i++) {
+				vec2 ghostUv = vUv - offset * float(i) * ghostSpacing; // Use '-' to move behind
+				ghostUv = clamp(ghostUv, vec2(0.0), vec2(1.0)); // Clamp UV coordinates within [0, 1] range
+				ghostColor += texture2D(tDiffuse, ghostUv);
+			}
+		
+			// Calculate the average color of the ghost copies
+			ghostColor /= float(numGhosts);
+		
+			// Output the final color
+			if (originalColor.a > 0.5) { // Adjust alpha threshold as needed
+				gl_FragColor = originalColor; // Output original color if alpha is high enough
+			} else {
+				gl_FragColor = mix(originalColor, originalColor + ghostColor, 0.5); // Blend original and ghost colors
+			}
+		}
+	`,
+	uniforms: {
+		"ghostSpacing": { value: 0.04 }, // Spacing between ghosts
+		"numGhosts": { value: 2 }, // Number of ghost copies
+		"scrollOffset": { value: 3 },
+		"tDiffuse": { value: null }
+	},
+	vertexShader: `
+		varying vec2 vUv;
+		void main() {
+			vUv = uv;
+			gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+		}
+	`
+};

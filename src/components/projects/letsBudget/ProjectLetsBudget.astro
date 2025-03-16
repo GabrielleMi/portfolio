@@ -1,0 +1,51 @@
+---
+import { Image as AstroImage } from "astro:assets";
+import CJEPreviewImg from "../../../assets/images/cje-moulins-preview.png";
+import Expandable from "../../Expandable.astro";
+import PieChart from "./PieChart.astro";
+---
+
+<Expandable>
+    <Fragment slot="beforeExpand">
+        <AstroImage
+            class="unselectable"
+            src={CJEPreviewImg}
+            width={290}
+            draggable={false}
+            alt="CJE des Moulins"
+        />
+    </Fragment>
+    <Fragment slot="afterExpand">
+        <header class="flex relative z-20 flex-col justify-center items-center py-8 text-center min-h-screen">
+            <div class="absolute inset-0 -z-10 flex items-center justify-center">
+                <PieChart
+                    class="top-0 opacity-60"
+                    size={500}
+                    sections={[
+                        {
+                            color: 'rgb(var(--color-primary-700))',
+                            value: 80
+                        },
+                        {
+                            color: 'rgb(var(--color-primary-900))',
+                            value: 60
+                        },
+                        {
+                            color: 'rgb(var(--color-primary-800))',
+                            value: 40
+                        }
+                    ]}
+                />
+            </div>
+            <p class="opacity-50">/projets/lets-budget</p>
+            <h1 class="text-7xl font-bold mb-1">Let's Budget</h1>
+            <p class="text-2xl mb-3">App en développement pour les finances personnelles</p>
+        </header>
+        <div class="container pb-16">
+            <section class="mb-6 py-8 min-h-screen items-center flex gap-6" data-animate>
+                <h2 class="text-6xl mb-2 font-bold uppercase">Un projet personnel</h2>
+                <p class="text-2xl mb-4">Je voulais une app pour m'aider à faire mes finances et j'avais envie de coder.</p>
+            </section>
+        </div>
+    </Fragment>
+</Expandable>

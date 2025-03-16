@@ -9,6 +9,7 @@
         --color-primary-900: 216 223 233;
         --color-primary-800: 226 232 240;
         --color-primary-700: 241 245 249;
+        --color-primary-600: 255 255 255;
 
         --color-highlight: 219 39 119;
 
@@ -20,6 +21,7 @@
         --color-primary-900: 17 24 39;
         --color-primary-800: 31 41 55;
         --color-primary-700: 55 65 81;
+        --color-primary-600: 69 80 97;
     }
 
     [data-animate] {
@@ -42,5 +44,14 @@
             opacity: 1;
             transform: translateY(0px);
         }
+    }
+
+    .unselectable {
+        user-drag: none;
+        -webkit-user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
     }
 }

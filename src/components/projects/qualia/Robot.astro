@@ -1,15 +1,15 @@
-<canvas id="robot" class="h-screen w-screen opacity-50 pointer-events-none absolute top-0 left-0 right-0" />
+<canvas id="robot" class="h-screen w-screen pointer-events-none fixed top-0 left-0 right-0" />
 <script>
-    import { HEXA_WHITE, createBaseScene, loadScene } from "../../../assets/scripts/threeUtils.ts";
+    import { HEXA_WHITE, createBaseScene, ghostingShader, loadScene } from "../../../assets/scripts/threeUtils.ts";
     import { Color } from "three";
     import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+    import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
     import WebGL from 'three/examples/jsm/capabilities/WebGL.js';
 
     const MODEL_PATH = "/portfolio/models/robot/character";
     const canvas = document.getElementById("robot");
     const color = new Color(HEXA_WHITE);
     const loader = new FBXLoader();
-    let animationFrame;
 
     const POS = {
         x: 0,
@@ -18,11 +18,15 @@
     };
 
 	if(WebGL.isWebGLAvailable() && canvas) {
-		const { scene, animate, mixer, killScene } = createBaseScene({ canvas, color });
+        const qualiaDetails = document.getElementById("qualia-details");
+        const qualiaDescription = document.getElementById("qualia-description");
+		const { scene, animate, mixer, composer } = createBaseScene({ canvas, color });
+
+        composer.addPass(new ShaderPass(ghostingShader));
 
 		const onAnimate = () => {
 			animate();
-			animationFrame = window.requestAnimationFrame(onAnimate);
+			window.requestAnimationFrame(onAnimate);
 		};
 
 		// const handleRemoveEventListeners = () => {
@@ -44,6 +48,26 @@
             .then((robot) => {
                 scene.add(robot);
                 mixer.clipAction(robot.animations[0]).play();
+
+                const MAX_ROTATION = 1;
+                const ROTATION_STEPS = MAX_ROTATION / qualiaDescription.offsetTop;
+                const ROTATION_DIR = -1;
+
+                const rotateOnScroll = () => {
+                    const scrollTop = qualiaDetails.scrollTop;
+                    const rotation = Math.min(scrollTop * ROTATION_STEPS, MAX_ROTATION) * ROTATION_DIR;
+
+                    robot.rotation.y = rotation;
+                    robot.position.set(rotation * -40, POS.y, POS.z);
+                };
+
+                const moveOnScroll = () => {
+                    if(qualiaDetails.scrollTop < qualiaDescription.offsetTop) {
+                        rotateOnScroll();
+                    }
+                };
+
+                qualiaDetails.addEventListener("scroll", moveOnScroll);
             });
 
 		onAnimate();

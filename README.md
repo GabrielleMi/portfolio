@@ -22,5 +22,5 @@ J'ai également exploré les [lambda functions](https://aws.amazon.com/) et le [
 
 ## Projets
 - Qualia
-- Kathleen M. Foster
-- Carrefour Jeunesse-Emploi des moulins
+- [Kathleen M. Foster](https://gabriellemi.github.io/kathleen-m-foster/)
+- [Carrefour jeunesse-emploi des Moulins](https://www.cjemoulins.org/)

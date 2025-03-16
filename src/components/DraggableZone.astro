@@ -3,12 +3,13 @@
 </div>
 <script>
     const draggableZones = document.querySelectorAll<HTMLDivElement>("[data-draggable-zone]");
-    const TIMEOUT_MS = 100;
+    const TIMEOUT_MS = 200;
 
     draggableZones.forEach((zone) => {
         const draggableItems = zone.querySelectorAll<HTMLDivElement>("[data-draggable]");
 
         draggableItems.forEach((draggable) => {
+            const initPos = draggable.getAttribute('data-position');
             let timeout: number;
             let animationFrame: number;
 
@@ -50,6 +51,7 @@
 
                     posX = e.clientX;
                     posY = e.clientY;
+
                     draggable.style.top = `${positions.top}px`;
                     draggable.style.left = `${positions.left}px`;
                 });
@@ -73,15 +75,6 @@
 
                 if(draggable.hasAttribute("data-dragging")) {
                     draggable.removeAttribute("data-dragging");
-
-                    window.sessionStorage.setItem(
-                        draggable.id,
-                        JSON.stringify({
-                            x: parseInt(draggable.style.left),
-                            y: parseInt(draggable.style.top)
-                        })
-                    );
-
                 } else if(draggable.hasAttribute("data-expandable")) {
                     expandItem();
                 }
@@ -106,17 +99,29 @@
                 }
             }
 
+            function getInitialPosition() {
+                if(initPos === 'center') {
+                    return {
+                        x: ((zone.offsetLeft + zone.offsetWidth) / 2),
+                        y: ((zone.offsetTop + zone.offsetHeight) / 2) - (draggable.offsetHeight / 2)
+                    };
+                }
+
+                if(initPos === 'right') {
+                    return {
+                        x: zone.offsetLeft + zone.offsetWidth - draggable.offsetWidth,
+                        y: draggable.offsetTop
+                    };
+                }
+
+                return {
+                    x: draggable.offsetLeft,
+                    y: draggable.offsetTop
+                };
+            }
+
             function initDraggable() {
-                const storagePos = window.sessionStorage.getItem(draggable.id);
-                const positions = getAllowedPositions(
-                    storagePos ?
-                        JSON.parse(storagePos)
-                        :
-                        {
-                            x: draggable.offsetLeft,
-                            y: draggable.offsetTop
-                        }
-                );
+                const positions = getAllowedPositions(getInitialPosition());
 
                 draggable.style.width = `${draggable.offsetWidth}px`;
                 draggable.style.height = `${draggable.offsetHeight}px`;
