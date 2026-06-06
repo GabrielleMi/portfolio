@@ -1,17 +1,17 @@
 ---
-import Aside from '../layouts/Aside.astro';
-import DocumentBase from '../layouts/DocumentBase.astro';
-import DraggableExpand from '../components/DraggableExpand.astro';
-import DraggableZone from '../components/DraggableZone.astro';
-import Nav from '../layouts/Nav.astro';
-import Profile from '../components/about/Profile.astro';
+import Aside from "../layouts/Aside.astro";
+import DocumentBase from "../layouts/DocumentBase.astro";
+import DraggableExpand from "../components/DraggableExpand.astro";
+import DraggableZone from "../components/DraggableZone.astro";
+import Nav from "../layouts/Nav.astro";
+import Profile from "../components/about/Profile.astro";
 import ProjectCJEMoulins from "../components/projects/cjeMoulins/ProjectCJEMoulins.astro";
 import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
 ---
 
 <DocumentBase
 	title="Gabrielle Michaud / Portfolio"
-	class="grid grid-cols-[18vw_auto] grid-rows-[auto_1fr] gap-2 relative"
+	class="lg:grid grid-cols-[18vw_auto] grid-rows-[auto_1fr] gap-2 relative"
 >
 	<header class="col-span-2">
 		<Nav />
@@ -19,14 +19,14 @@ import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
 	<Aside />
 	<main id="main" class="h-full w-full">
 		<DraggableZone>
+			<DraggableExpand position="center" id="draggable-profile">
+				<Profile />
+			</DraggableExpand>
 			<DraggableExpand id="draggable-qualia">
 				<ProjectQualia />
 			</DraggableExpand>
 			<DraggableExpand position="right" id="draggable-cje">
 				<ProjectCJEMoulins />
-			</DraggableExpand>
-			<DraggableExpand position="center" id="draggable-profile">
-				<Profile />
 			</DraggableExpand>
 			<!-- <DraggableExpand id="draggable-budget">
 				<ProjectLetsBudget />

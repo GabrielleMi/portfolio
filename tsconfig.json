@@ -1,6 +1,12 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "types": [
+      "astro/client",
+      "node"
+    ],
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   }

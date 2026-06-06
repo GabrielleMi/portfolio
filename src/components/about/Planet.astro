@@ -1,5 +1,5 @@
 <div class="solar-system">
-    <div class="planet" />
+    <div class="planet"></div>
     <div class="satellites">
         <b class="absolute left-1/2">✦</b>
         <b class="absolute bottom-0 right-0">✦</b>
@@ -34,7 +34,7 @@
         margin: auto;
         height: var(--solar-system-planet-size);
         width: var(--solar-system-planet-size);
-        box-sizing:content-box;
+        box-sizing: content-box;
     }
 
     .solar-system:after {
@@ -77,40 +77,44 @@
         animation: 400s linear infinite reverse rotate;
         content: "";
         display: block;
-        height: .5vmin;
+        height: 0.5vmin;
         border-radius: 50%;
         box-shadow:
-            200px 200px .1vmin currentColor,
-            -50px -100px .1vmin currentColor,
-            150px 80px .1vmin currentColor,
-            150px -150px .1vmin .1vmin currentColor,
-            300px 20px .1vmin currentColor,
-            200px 40px .1vmin currentColor,
-            -140px 60px .1vmin currentColor,
-            -300px -150px .1vmin .1vmin currentColor,
-            -100px -150px .1vmin .1vmin currentColor,
-            -100px 150px .1vmin currentColor,
-            80px 80px .1vmin currentColor,
-            -200px -10px .1vmin currentColor,
-            0 180px .1vmin currentColor,
-            0 -250px .1vmin currentColor,
-            -90px -250px .1vmin .1vmin currentColor,
-            200px -60px .1vmin currentColor,
-            60px 200px .1vmin .1vmin currentColor,
-            -300px 70px .1vmin currentColor,
-            -150px -30px .1vmin .1vmin currentColor,
-            -100px 200px .1vmin currentColor;
+            200px 200px 0.1vmin currentColor,
+            -50px -100px 0.1vmin currentColor,
+            150px 80px 0.1vmin currentColor,
+            150px -150px 0.1vmin 0.1vmin currentColor,
+            300px 20px 0.1vmin currentColor,
+            200px 40px 0.1vmin currentColor,
+            -140px 60px 0.1vmin currentColor,
+            -300px -150px 0.1vmin 0.1vmin currentColor,
+            -100px -150px 0.1vmin 0.1vmin currentColor,
+            -100px 150px 0.1vmin currentColor,
+            80px 80px 0.1vmin currentColor,
+            -200px -10px 0.1vmin currentColor,
+            0 180px 0.1vmin currentColor,
+            0 -250px 0.1vmin currentColor,
+            -90px -250px 0.1vmin 0.1vmin currentColor,
+            200px -60px 0.1vmin currentColor,
+            60px 200px 0.1vmin 0.1vmin currentColor,
+            -300px 70px 0.1vmin currentColor,
+            -150px -30px 0.1vmin 0.1vmin currentColor,
+            -100px 200px 0.1vmin currentColor;
         position: absolute;
         top: 50%;
         left: 50%;
         opacity: 0.8;
         transform: translate(-50%, -50%);
-        width: .5vmin;
+        width: 0.5vmin;
     }
 
     .planet {
         animation: 2.5s ease-out 1s infinite alternate float;
-        background: radial-gradient(circle at top right, rgb(var(--color-highlight)), rgb(var(--color-highlight) / 0.6));
+        background: radial-gradient(
+            circle at top right,
+            var(--color-highlight),
+            color-mix(in oklch, var(--color-highlight), transparent 40%)
+        );
         border-radius: var(--solar-system-planet-size);
         box-shadow:
             inset 30px -10px 0 rgb(0, 0, 0, 0.1),
@@ -130,11 +134,12 @@
         left: 20%;
         border: 3px solid rgb(0, 0, 0, 0.2);
         border-radius: 20px;
-        box-shadow: 100px 50px 0 10px rgb(0, 0, 0, 0.2),
-                    -30px 50px 0 5px rgb(0, 0, 0, 0.2),
-                    60px -35px 0 3px rgb(0, 0, 0, 0.2),
-                    -30px 90px 0 3px rgb(0, 0, 0, 0.2),
-                    60px 35px 0 1px rgb(0, 0, 0, 0.2);
+        box-shadow:
+            100px 50px 0 10px rgb(0, 0, 0, 0.2),
+            -30px 50px 0 5px rgb(0, 0, 0, 0.2),
+            60px -35px 0 3px rgb(0, 0, 0, 0.2),
+            -30px 90px 0 3px rgb(0, 0, 0, 0.2),
+            60px 35px 0 1px rgb(0, 0, 0, 0.2);
     }
 
     .planet:before {
@@ -164,7 +169,7 @@
         --position-x: 0;
         --position-y: 0;
         --scale: 1;
-        --bg-color: 199 37 111;
+        --bg-color: oklch(0.7 0.2 240);
         --shadow: inset 8px -4px 0 rgb(0, 0, 0, 0.2);
 
         animation: var(--moving-speed) linear infinite forwards rotate;
@@ -179,13 +184,14 @@
 
     .satellite i {
         align-items: center;
-        background-color: rgb(var(--bg-color));
+        background-color: var(--bg-color);
         border-radius: 100%;
         box-shadow: var(--shadow);
-        color: rgb(var(--color-primary-950) / 0.5);
+        color: oklch(from var(--color-primary-950) l c h / 0.5);
         display: flex;
         justify-content: center;
-        transform: translate(var(--position-x), var(--position-y)) scale(var(--scale));
+        transform: translate(var(--position-x), var(--position-y))
+            scale(var(--scale));
         font-size: 5vmin;
         height: 12vmin;
         position: relative;
@@ -205,7 +211,7 @@
         --position-x: 15vmin;
         --position-y: -10vmin;
         --scale: 0.4;
-        --bg-color: 171 37 199;
+        --bg-color: rgb(171 37 199);
         --shadow: inset -8px 0px 0 rgb(0, 0, 0, 0.2);
     }
 
@@ -213,7 +219,7 @@
         --position-x: -180px;
         --position-y: 150px;
         --scale: 0.8;
-        --bg-color: 93 37 199;
+        --bg-color: rgb(93 37 199);
     }
 
     .hiking {
@@ -221,7 +227,7 @@
         --position-x: -18vmin;
         --position-y: -18vmin;
         --scale: 0.7;
-        --bg-color: 37 136 199;
+        --bg-color: rgb(37 136 199);
         --shadow: inset 8px 8px 0 rgb(0, 0, 0, 0.2);
     }
 
@@ -229,7 +235,7 @@
         --position-x: 150px;
         --position-y: 150px;
         --scale: 0.8;
-        --bg-color: 37 76 199;
+        --bg-color: rgb(37 76 199);
         --shadow: inset -8px -8px 0 rgb(0, 0, 0, 0.2);
     }
 
@@ -237,7 +243,7 @@
         --position-x: 100px;
         --position-y: -200px;
         --scale: 0.6;
-        --bg-color: 199 37 185;
+        --bg-color: rgb(199 37 185);
         --shadow: inset -8px 8px 0 rgb(0, 0, 0, 0.2);
     }
 

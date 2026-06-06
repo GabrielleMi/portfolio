@@ -1,27 +1,28 @@
 ---
 const { canExpand = true, id, position, ...props } = Astro.props;
 
-if(!id) {
+if (!id) {
     console.warn("Missing id for draggable element");
 }
-
 ---
+
 <div
     data-draggable
     data-position={position}
     id={id}
-    {...(canExpand ? { ["data-expandable"]: "true" } : {})}
+    {...canExpand ? { ["data-expandable"]: "true" } : {}}
     {...props}
     class:list={[
         "overflow-hidden",
-        "data-[dragging]:cursor-grabbing",
-        "data-[dragging]:bg-primary-700",
+        "data-dragging:cursor-grabbing",
+        "data-dragging:bg-primary-700",
         "hover:bg-primary-800",
         "rounded-lg",
+        "m-5 lg:m-0",
         "bg-primary-900",
         "z-50",
-        "absolute",
-        "shadow-lg"
+        "lg:absolute relative",
+        "shadow-lg",
     ]}
 >
     <slot />
@@ -30,23 +31,42 @@ if(!id) {
         data-draggable-btn
         aria-label="Grab"
         class="absolute opacity-50 top-0 right-0 cursor-grab fa-solid fa-grip mt-2 mr-2"
-    />
-    {canExpand &&
-        <button
-            type="button"
-            data-expandable-close
-            aria-label="Close"
-            class="absolute z-50 top-0 left-0 fa-solid text-xl fa-circle-xmark p-6 cursor-pointer"
-        />
+    ></button>
+    {
+        canExpand && (
+            <button
+                type="button"
+                data-expandable-close
+                aria-label="Close"
+                class="absolute z-50 top-0 left-0 fa-solid text-xl fa-circle-xmark p-6 cursor-pointer"
+            />
+        )
     }
 </div>
 <style>
     [data-draggable] {
-        box-shadow: -0.5rem 0.5rem 2rem rgb(var(--color-highlight) / 0.05) !important;
+        box-shadow: -0.5rem 0.5rem 2rem
+            oklch(from var(--color-highlight) l c h / 0.05) !important;
+    }
+
+    @media (width >= 64rem) {
+        [data-draggable] {
+            width: var(--data-draggable-width);
+            height: var(--data-draggable-height);
+            top: var(--data-draggable-position-top);
+            left: var(--data-draggable-position-left);
+        }
     }
 
     [data-expanded] {
-        background: radial-gradient(rgb(var(--color-primary-900)), rgb(var(--color-primary-950)));
+        background: radial-gradient(
+            var(--color-primary-900),
+            var(--color-primary-950)
+        );
+        max-width: 100vw;
+        position: fixed;
+        margin: 0;
+        height: 100%;
         z-index: 1000;
     }
 

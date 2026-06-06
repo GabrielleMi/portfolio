@@ -1,12 +1,21 @@
 { 
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    },
     "eslint.validate": [
         "javascript",
         "javascriptreact",
-        "astro", // Enable .astro
-        "typescript", // Enable .ts
-        "typescriptreact" // Enable .tsx
+        "typescript",
+        "typescriptreact",
+        "astro"
     ],
     "editor.suggest.showFolders": true,
     "explorer.compactFolders": true,
-    "files.enableTrash": true
+    "files.enableTrash": true,
+    "[astro]": {
+        "editor.defaultFormatter": "astro-build.astro-vscode"
+    }
 }

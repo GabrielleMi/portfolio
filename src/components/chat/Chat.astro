@@ -14,32 +14,32 @@ import ContactForm from "../chat/ContactForm";
 	<ContactForm client:load />
 </dialog>
 <script>
-	const contact = document.getElementById("contact") as HTMLDialogElement;
-	const contactBtns = document.querySelectorAll<HTMLButtonElement>("[data-contact-control]");
+	const contact = document.getElementById('contact') as HTMLDialogElement;
+	const contactBtns = document.querySelectorAll<HTMLButtonElement>('[data-contact-control]');
 
 	const closeContact = () => contact.close();
 
 	const closeOnBackdropClick = (e: Event) => {
-		const target = e.target as HTMLDialogElement;
+	  const target = e.target as HTMLDialogElement;
 
-		if(target.id === "contact" && contact.open) {
-			closeContact();
-		}
+	  if (target.id === 'contact' && contact.open) {
+	    closeContact();
+	  }
 	};
 
-	const closeContactBtn = contact.querySelector<HTMLButtonElement>("#contact-close");
+	const closeContactBtn = contact.querySelector<HTMLButtonElement>('#contact-close');
 
 	contactBtns.forEach((btn) => {
-		btn.addEventListener("click", () => {
-			if(contact.open) {
-				closeContact();
-			} else {
-				contact.showModal();
-			}
-		});
+	  btn.addEventListener('click', () => {
+	    if (contact.open) {
+	      closeContact();
+	    } else {
+	      contact.showModal();
+	    }
+	  });
 	});
-	contact.addEventListener("click", closeOnBackdropClick);
-	closeContactBtn.addEventListener("click", closeContact);
+	contact.addEventListener('click', closeOnBackdropClick);
+	closeContactBtn.addEventListener('click', closeContact);
 </script>
 <style is:global>
 	.contact {

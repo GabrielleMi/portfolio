@@ -1,14 +1,12 @@
 import { defineConfig } from 'astro/config';
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   base: '/portfolio',
-  integrations: [
-    tailwind({
-      applyBaseStyles: false
-    }),
-    react()
-  ],
-  site: 'https://gabriellemi.github.io'
+  integrations: [react()],
+  site: 'https://gabriellemi.github.io',
+  vite: {
+    plugins: [tailwindcss()]
+  }
 });

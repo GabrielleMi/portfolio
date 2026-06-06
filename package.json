@@ -1,36 +1,39 @@
 {
   "name": "portfolio",
   "type": "module",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "lint": "eslint --fix --ext .js,.ts,.astro src"
+    "lint": "eslint --fix src"
   },
   "dependencies": {
-    "@astrojs/react": "^4.1.2",
-    "@astrojs/tailwind": "^5.1.4",
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "@types/three": "^0.174.0",
-    "astro": "^5.1.4",
-    "highlight.js": "^11.9.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwindcss": "^3.4.1",
-    "three": "^0.174.0",
-    "yup": "^1.3.3"
+    "@astrojs/react": "^5.0.7",
+    "@GabrielleMi/utils": "^0.1.0",
+    "@google/model-viewer": "^4.3.1",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.4.4",
+    "highlight.js": "^11.11.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tailwindcss": "^4.3.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^0.34.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-unused-imports": "^3.1.0"
+    "@eslint/js": "^10.0.1",
+    "@eslint/json": "^2.0.0",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^25.9.1",
+    "eslint": "^10.4.1",
+    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^17.6.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.1"
   }
 }
