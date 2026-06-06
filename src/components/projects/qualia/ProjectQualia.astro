@@ -89,40 +89,42 @@ import Robot from "./Robot.astro";
     }
 </style>
 <script>
-    const qualiaDetails = document.getElementById(
-        "qualia-details",
-    ) as HTMLDivElement;
-    const description = qualiaDetails.querySelector<HTMLElement>(
-        "#qualia-description",
-    );
+    (function () {
+        const qualiaDetails = document.getElementById(
+            "qualia-details",
+        ) as HTMLDivElement;
+        const description = qualiaDetails.querySelector<HTMLElement>(
+            "#qualia-description",
+        );
 
-    if (!description) {
-        console.error("Description not found");
-        return;
-    }
+        if (!description) {
+            console.error("Description not found");
+            return;
+        }
 
-    const title = description.querySelector<HTMLHeadingElement>(
-        "#qualia-description-title",
-    );
+        const title = description.querySelector<HTMLHeadingElement>(
+            "#qualia-description-title",
+        );
 
-    if (!title) {
-        console.error("Title not found");
-        return;
-    }
+        if (!title) {
+            console.error("Title not found");
+            return;
+        }
 
-    const DISTANCE_MAX = 1;
-    const DISTANCE_STEP = DISTANCE_MAX / description.offsetTop;
-    const DISTANCE_DIRECTION = -1;
+        const DISTANCE_MAX = 1;
+        const DISTANCE_STEP = DISTANCE_MAX / description.offsetTop;
+        const DISTANCE_DIRECTION = -1;
 
-    const handleOnScroll = (e: Event) => {
-        const target = e.target as HTMLDivElement;
-        const scrollTop = target.scrollTop;
-        const shadowDistance =
-            Math.min(scrollTop * DISTANCE_STEP, DISTANCE_MAX) *
-            DISTANCE_DIRECTION;
+        const handleOnScroll = (e: Event) => {
+            const target = e.target as HTMLDivElement;
+            const scrollTop = target.scrollTop;
+            const shadowDistance =
+                Math.min(scrollTop * DISTANCE_STEP, DISTANCE_MAX) *
+                DISTANCE_DIRECTION;
 
-        title.style.setProperty("--title-offset", `${shadowDistance}em`);
-    };
+            title.style.setProperty("--title-offset", `${shadowDistance}em`);
+        };
 
-    qualiaDetails.addEventListener("scroll", handleOnScroll);
+        qualiaDetails.addEventListener("scroll", handleOnScroll);
+    })();
 </script>
