@@ -1,0 +1,16 @@
+---
+interface Props extends astroHTML.JSX.HTMLAttributes {
+  controlId: string;
+}
+
+const { id: _, controlId, ...attributes } = Astro.props;
+---
+
+<div
+  id={`panel-${controlId}`}
+  role="tabpanel"
+  aria-labelledby={controlId}
+  {...attributes}
+>
+  <slot />
+</div>

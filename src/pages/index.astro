@@ -7,16 +7,16 @@ import Nav from "../layouts/Nav.astro";
 import Profile from "../components/about/Profile.astro";
 import ProjectCJEMoulins from "../components/projects/cjeMoulins/ProjectCJEMoulins.astro";
 import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
+import ProjectLetsBudget from "../components/projects/letsBudget/ProjectLetsBudget.astro";
 ---
 
 <DocumentBase
 	title="Gabrielle Michaud / Portfolio"
-	class="lg:grid grid-cols-[18vw_auto] grid-rows-[auto_1fr] gap-2 relative"
+	class="lg:grid grid-cols-[75vw_auto] grid-rows-[auto_1fr] gap-2 relative"
 >
 	<header class="col-span-2">
 		<Nav />
 	</header>
-	<Aside />
 	<main id="main" class="h-full w-full">
 		<DraggableZone>
 			<DraggableExpand position="center" id="draggable-profile">
@@ -33,5 +33,6 @@ import ProjectQualia from "../components/projects/qualia/ProjectQualia.astro";
 			</DraggableExpand> -->
 		</DraggableZone>
 	</main>
+	<Aside />
 	<!-- <Chat /> -->
 </DocumentBase>

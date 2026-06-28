@@ -10,48 +10,54 @@ import ContactForm from "../chat/ContactForm";
 >
 	<i class="fa-solid fa-comment"></i>
 </button>
-<dialog id="contact" class="contact bg-transparent right-0 px-6 pt-6 pb-12 mb-6 mr-0">
+<dialog
+	id="contact"
+	class="contact bg-transparent right-0 px-6 pt-6 pb-12 mb-6 mr-0"
+>
 	<ContactForm client:load />
 </dialog>
 <script>
-	const contact = document.getElementById('contact') as HTMLDialogElement;
-	const contactBtns = document.querySelectorAll<HTMLButtonElement>('[data-contact-control]');
+	const contact = document.getElementById("contact") as HTMLDialogElement;
+	const contactBtns = document.querySelectorAll<HTMLButtonElement>(
+		"[data-contact-control]",
+	);
 
 	const closeContact = () => contact.close();
 
 	const closeOnBackdropClick = (e: Event) => {
-	  const target = e.target as HTMLDialogElement;
+		const target = e.target as HTMLDialogElement;
 
-	  if (target.id === 'contact' && contact.open) {
-	    closeContact();
-	  }
+		if (target.id === "contact" && contact.open) {
+			closeContact();
+		}
 	};
 
-	const closeContactBtn = contact.querySelector<HTMLButtonElement>('#contact-close');
+	const closeContactBtn =
+		contact.querySelector<HTMLButtonElement>("#contact-close");
 
 	contactBtns.forEach((btn) => {
-	  btn.addEventListener('click', () => {
-	    if (contact.open) {
-	      closeContact();
-	    } else {
-	      contact.showModal();
-	    }
-	  });
+		btn.addEventListener("click", () => {
+			if (contact.open) {
+				closeContact();
+			} else {
+				contact.showModal();
+			}
+		});
 	});
-	contact.addEventListener('click', closeOnBackdropClick);
-	closeContactBtn.addEventListener('click', closeContact);
+	contact.addEventListener("click", closeOnBackdropClick);
+	closeContactBtn?.addEventListener("click", closeContact);
 </script>
 <style is:global>
 	.contact {
 		color: inherit;
 	}
-    .contact::backdrop {
-        opacity: 0;
-    }
-    .contact-form {
-        min-height: 50vh;
-        width: 300px;
-    }
+	.contact::backdrop {
+		opacity: 0;
+	}
+	.contact-form {
+		min-height: 50vh;
+		width: 300px;
+	}
 	.loading-dots {
 		animation-name: fade;
 		animation-timing-function: linear;

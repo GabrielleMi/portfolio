@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@astrojs/react": "^5.0.7",
-    "@GabrielleMi/utils": "^0.1.0",
+    "@GabrielleMi/async": "^0.2.0",
+    "@GabrielleMi/core": "^0.4.0",
     "@google/model-viewer": "^4.3.1",
     "@tailwindcss/vite": "^4.3.0",
     "@types/react": "^19.2.17",

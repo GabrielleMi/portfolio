@@ -1,0 +1,56 @@
+<div data-tabs>
+  <slot />
+</div>
+<script>
+  const tabs = document.querySelectorAll<HTMLElement>("[data-tabs]");
+
+  tabs.forEach((tab) => {
+    const tabControls = tab.querySelectorAll<HTMLButtonElement>("[role=tab]");
+    const panelsByControlId = new Map<string, HTMLElement>();
+    let activePanel: HTMLElement | undefined;
+    let activeControl: HTMLButtonElement | undefined;
+
+    const getTabPanel = (controlId: string) => {
+      if (panelsByControlId.has(controlId)) {
+        return panelsByControlId.get(controlId);
+      }
+
+      const panel = tab.querySelector<HTMLElement>(`#panel-${controlId}`);
+
+      if (panel) {
+        panelsByControlId.set(controlId, panel);
+      }
+
+      return panel || undefined;
+    };
+
+    tabControls.forEach((control) => {
+      if (control.getAttribute("aria-selected") === "true") {
+        activeControl = control;
+        activePanel = getTabPanel(control.id);
+      }
+
+      const handleOnClick = (e: PointerEvent) => {
+        const tabPanel = getTabPanel(control.id);
+
+        if (!tabPanel) {
+          console.error(
+            `No tab panel ("#panel-${control.id}") found for control "${control.id}"`,
+          );
+          return;
+        }
+
+        activePanel?.setAttribute("hidden", "true");
+        activePanel = tabPanel;
+
+        activeControl?.setAttribute("aria-selected", "false");
+        control.setAttribute("aria-selected", "true");
+        activeControl = control;
+
+        tabPanel.removeAttribute("hidden");
+      };
+
+      control.addEventListener("click", handleOnClick);
+    });
+  });
+</script>

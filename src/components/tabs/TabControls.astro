@@ -1,0 +1,12 @@
+---
+const attributes = Astro.props;
+---
+
+<nav
+  {...attributes}
+  class:list={[attributes.class, "border-b-primary-800 border-b mb-4"]}
+>
+  <div role="tablist">
+    <slot />
+  </div>
+</nav>

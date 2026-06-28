@@ -1,0 +1,350 @@
+---
+
+---
+
+<section data-terminal class="font-mono text-xs bg-mauve-950 rounded p-2 -mx-2">
+  <div data-line>
+    <h2>GabrielleMi Console</h2>
+    <small class="text-xs block"
+      >Copyright (C) GabrielleMi. Tous droits réservés.</small
+    ><br />
+    <small class="text-xs block"
+      >Utilisez help pour afficher les commandes disponibles.</small
+    >
+    <br />
+  </div>
+  <div data-input class="break-all">
+    <span data-identifier class="text-highlight">visitor@portfolio</span>:<span
+      data-location
+      class="text-cyan-600">~</span
+    >$ <span
+      contenteditable="true"
+      id="console-input"
+      class="px-0 border-0 outline-0"
+    >
+    </span>
+  </div>
+</section>
+<script>
+  import { isObject, isString } from "@GabrielleMi/core";
+  import { CommandHistory, setContentEditableText } from "../../helpers/utils";
+  import {
+    CLEAR,
+    ROOT_DIR,
+    LS,
+    LL,
+    CD,
+    CAT,
+    HELP,
+    HISTORY,
+    ECHO,
+    PWD,
+    TREE,
+    autoCompletePath,
+    navigateDir,
+    getFileContent,
+  } from "../../helpers/terminal";
+
+  interface FileTree {
+    [name: string]: string | FileTree;
+  }
+  const FILES: FileTree = {
+    projets: {
+      "cje-moulins": {
+        "stack.txt": "Wordpress",
+        "about.txt":
+          "Un CMS permettant aux employés de gérer leur contenu. Le public cible est composé de jeunes de 16 à 35 ans qui sont en recherche d'emploi, qui veulent faire un retour aux études ou qui ont besoin d'un soutient pour leur autonomie.",
+      },
+      qualia: {
+        "stack.txt": "Unity",
+        "about.txt":
+          "Qualia est un jeu de plateforme en défilement latéral en 3D. Le joueur incarne un robot qu'il peut clôner afin de compléter des puzzles générés de façon procédurale.",
+      },
+    },
+    "about.txt":
+      "I am a passionate web developer with a love for creating websites. I specialize in front-end development, but I also have experience with back-end technologies. My goal is to build user-friendly and visually appealing web applications that provide a seamless experience for users.",
+  };
+
+  const COMMANDS = {
+    [HELP]: {
+      desc: "Display available commands",
+    },
+    [LS]: {
+      desc: "List files and directories",
+    },
+    [LL]: {
+      desc: "List files and directories",
+    },
+    [CD]: {
+      desc: "Changes your current directory to a specified path",
+    },
+    [CAT]: {
+      desc: "Display the content of a specified file",
+    },
+    [CLEAR]: {
+      desc: "Clear the console output",
+    },
+    [ECHO]: {
+      desc: "Display a line of text",
+    },
+    [PWD]: {
+      desc: "Print the current working directory",
+    },
+    [HISTORY]: {
+      desc: "Display the command history",
+    },
+    [TREE]: {
+      desc: "Display the directory tree",
+    },
+  };
+
+  document
+    .querySelectorAll<HTMLElement>("[data-terminal]")
+    .forEach((terminal) => {
+      let pos: string[] = [];
+      const history = new CommandHistory(100);
+      const input = terminal.querySelector<HTMLInputElement>("#console-input");
+      const inputLabel = input?.parentElement as HTMLLabelElement;
+      const label = inputLabel?.querySelector(
+        "[data-identifier]",
+      ) as HTMLSpanElement;
+      const location = inputLabel?.querySelector(
+        "[data-location]",
+      ) as HTMLSpanElement;
+
+      const insertText = (
+        text: string,
+        withLabel: boolean = false,
+        isError: boolean = false,
+      ) => {
+        const line = document.createElement("div");
+        line.setAttribute("data-line", "true");
+        line.classList.add("break-all");
+
+        if (isError) {
+          line.classList.add("text-red-500");
+        }
+
+        if (withLabel) {
+          const l = location?.cloneNode(true);
+          l.textContent =
+            pos.length > 0 ? `${ROOT_DIR}/${pos.join("/")}` : ROOT_DIR;
+
+          line.appendChild(label.cloneNode(true));
+          line.append(":");
+          line.appendChild(l);
+          line.append("$ ");
+        }
+
+        const output = document.createElement("output");
+        output.textContent = text;
+
+        if (!withLabel) {
+          output.style.whiteSpace = "pre-wrap";
+        }
+
+        line.appendChild(output);
+        inputLabel.insertAdjacentElement("beforebegin", line);
+      };
+
+      const displayError = (error: Error | unknown) => {
+        insertText(
+          error instanceof Error ? error.message : String(error),
+          false,
+          true,
+        );
+      };
+
+      const navigateFolders = (command: string) => {
+        try {
+          console.log(pos, command);
+          pos = navigateDir(FILES, pos, command);
+          location.textContent =
+            pos.length > 0 ? `${ROOT_DIR}/${pos.join("/")}` : ROOT_DIR;
+        } catch (e) {
+          displayError(e);
+        }
+      };
+
+      const displayDir = () => {
+        const currentDir = pos.reduce<Record<string, any>>((dir, segment) => {
+          return dir[segment] || {};
+        }, FILES);
+
+        insertText(
+          Object.keys(currentDir)
+            .map((name) => {
+              const file = currentDir[name];
+              const isDir = isObject(file);
+              const count = isDir
+                ? Object.keys(file).filter((key) => isObject(file[key]))
+                    .length + 2
+                : 1;
+              return `${count} root root ${name}\n`;
+            })
+            .join(""),
+        );
+      };
+
+      const displayHelp = () => {
+        insertText(
+          Object.entries(COMMANDS)
+            .map(([cmd, { desc }]) => `${cmd} - ${desc}`)
+            .join("\n"),
+        );
+      };
+
+      const displayHistory = () => {
+        const fullHistory = history.getAll();
+        if (fullHistory.length === 0) {
+          insertText("No command history available.");
+          return;
+        }
+
+        insertText(
+          fullHistory.map((cmd, index) => `${index + 1} ${cmd}`).join("\n"),
+        );
+      };
+
+      const displayTree = () => {
+        const buildTree = (
+          dir: Record<string, any>,
+          prefix: string = "",
+        ): string => {
+          return Object.keys(dir)
+            .map((name) => {
+              const file = dir[name];
+              const isDir = isObject(file);
+              const newPrefix = `${prefix}${isDir ? "│   " : "    "}`;
+              return `${prefix}${isDir ? "├── " : "└── "}${name}\n${
+                isDir ? buildTree(file, newPrefix) : ""
+              }`;
+            })
+            .join("");
+        };
+
+        insertText(buildTree(FILES));
+      };
+
+      const printFileContent = (command: string) => {
+        try {
+          const content = getFileContent(FILES, pos, command);
+          if (isString(content)) {
+            insertText(content);
+          } else {
+            throw new Error(
+              `${command}: ${content ? "No such file" : "Is a directory"}`,
+            );
+          }
+        } catch (e) {
+          displayError(e);
+        }
+      };
+
+      const clearConsole = () => {
+        const lines = terminal.querySelectorAll("[data-line]");
+        lines.forEach((line) => line.remove());
+      };
+
+      const handleCommands = (command: string) => {
+        switch (command) {
+          case HELP:
+            displayHelp();
+            break;
+          case LS:
+          case LL:
+            displayDir();
+            break;
+          case CLEAR:
+            clearConsole();
+            break;
+          case PWD:
+            insertText(`/${pos.join("/")}`);
+            break;
+          case HISTORY:
+            displayHistory();
+            break;
+          case TREE:
+            displayTree();
+            break;
+          case CD:
+            pos.length = 0;
+            navigateFolders(`${CD} `);
+            break;
+          case CAT:
+            displayError("Please provide a path (ex: cat about.txt)");
+            break;
+          case ECHO:
+            displayError("Please provide a value (ex: echo 'Hello world'");
+            break;
+          default:
+            if (command.startsWith(`${CD} `)) {
+              navigateFolders(command);
+              break;
+            }
+
+            if (command.startsWith(`${CAT} `)) {
+              printFileContent(command);
+              break;
+            }
+
+            if (command.startsWith(`${ECHO} `)) {
+              const toEcho = command.slice(ECHO.length + 1);
+              const cleanedEcho = toEcho.replace(/^['"]|['"]$/g, "");
+              insertText(cleanedEcho);
+              break;
+            }
+
+            displayError(`Command not found: ${command}`);
+            break;
+        }
+      };
+
+      const handleOnKeyDown = (e: KeyboardEvent) => {
+        const target = e.target as HTMLInputElement;
+        const value = target.textContent?.trim();
+
+        console.log("handleOnKeyDown", { value, key: e.key, pos });
+
+        switch (e.key) {
+          case "ArrowUp":
+            e.preventDefault();
+            setContentEditableText(target, history.previous());
+            break;
+          case "ArrowDown":
+            e.preventDefault();
+            setContentEditableText(target, history.next());
+            break;
+          case "Enter":
+            e.preventDefault();
+            insertText(value, true);
+            if (value) {
+              handleCommands(value);
+              history.add(value);
+              setContentEditableText(target, "");
+            }
+            break;
+          case "Tab":
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("Tab pressed", { value, pos });
+
+            if (value.startsWith(`${CD} `) || value.startsWith(`${CAT} `)) {
+              const val = autoCompletePath(FILES, pos, value);
+              if (val) {
+                setContentEditableText(target, value + val);
+              }
+            }
+
+            break;
+          default:
+            break;
+        }
+      };
+
+      input?.addEventListener("keydown", handleOnKeyDown);
+      inputLabel?.addEventListener("click", () => {
+        input?.focus();
+      });
+    });
+</script>

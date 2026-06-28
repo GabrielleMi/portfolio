@@ -1,0 +1,31 @@
+---
+import SlotValidator from "../SlotValidator.astro";
+import { PHRASING_CONTENT, INTERACTIVE_CONTENT } from "../../helpers/utils";
+
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
+  id: string;
+}
+const { id, class: className, ...attributes } = Astro.props;
+---
+
+<button
+  {...attributes}
+  role="tab"
+  aria-controls={`panel-${id}`}
+  type="button"
+  id={id}
+  class:list={[className, "tab-control cursor-pointer text-sm p-2"]}
+>
+  <SlotValidator
+    allowed={PHRASING_CONTENT.filter(
+      (tag) => !INTERACTIVE_CONTENT.includes(tag),
+    )}
+  >
+    <slot />
+  </SlotValidator>
+</button>
+<style>
+  .tab-control[aria-selected="true"] {
+    border-bottom: 3px solid var(--color-highlight);
+  }
+</style>

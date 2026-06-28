@@ -10,11 +10,11 @@ import {
   splitIntoParagraphs
 } from './contactUtils';
 import { Fragment, useEffect, useRef, useState } from 'react';
-import { delay } from '../../helpers/utils';
+import { delay } from '@GabrielleMi/async';
 import { ENTER_KEY } from '../../helpers/constants';
 import { fetchMessage } from '../../api/openAi';
+import { isStrEqualCi } from '@GabrielleMi/core';
 import { string } from 'yup';
-import { isStrEqualCi } from '@GabrielleMi/utils';
 
 function ChatMessage({ className, isRight, ...props }) {
   return (
@@ -22,8 +22,7 @@ function ChatMessage({ className, isRight, ...props }) {
       {...props}
       className={
         `${className ? `${className} ` : ''
-        }p-2 rounded-t-xl shadow ${
-          isRight ? 'rounded-bl-xl ml-2' : 'mr-2 rounded-br-xl'}`
+        }p-2 rounded-t-xl shadow ${isRight ? 'rounded-bl-xl ml-2' : 'mr-2 rounded-br-xl'}`
       }
     />
   );
@@ -286,19 +285,21 @@ export default function ContactForm() {
               && <button className="opacity-50" onClick={resetChat} type="button">Réinitialiser</button>}
           </Fragment>
         ))}
-        {isTyping
-          ? (
+        {
+          isTyping
+            ? (
               <ChatMessage className="bg-primary-700">
                 <i className="loading-dots" />
               </ChatMessage>
             )
-          : !mode
+            : !mode
             && (
               <div className="flex mt-1 gap-2">
                 <button className="hover:bg-highlight border border-white shadow rounded-lg px-3 py-2" onClick={() => toggleContact(true)} type="button">{MODE_CONTACT}</button>
                 <button className="hover:bg-highlight border border-white shadow rounded-lg px-3 py-2" onClick={() => toggleDiscussion(true)} type="button">{MODE_DISCUSS}</button>
               </div>
-            )}
+            )
+        }
       </ul>
       <div className="m-4 mt-auto">
         <fieldset className="flex">

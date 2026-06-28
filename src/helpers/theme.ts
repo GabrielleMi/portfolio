@@ -4,7 +4,7 @@ export const THEME_LIGHT = 'light';
 /**
  * @param {MODE_DARK|MODE_LIGHT} theme
  */
-export const toggleTheme = (theme) => {
+export const toggleTheme = (theme: typeof THEME_DARK | typeof THEME_LIGHT) => {
   if (theme === THEME_DARK) {
     document.documentElement.classList.add(THEME_DARK);
   } else {

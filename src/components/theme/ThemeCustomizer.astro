@@ -1,0 +1,58 @@
+---
+import ColorPicker from "./ColorPicker.astro";
+---
+
+<div
+  class="w-full border flex flex-col border-dashed border-current rounded mb-6 opacity-30 p-1"
+  style="height:100px;"
+>
+  <div
+    class="w-full hover:bg-primary-700 border border-dashed border-current rounded h-1/6 mb-1"
+  >
+  </div>
+  <div
+    class="h-full hover:bg-primary-700 border border-dashed border-current rounded w-1/6 ml-auto"
+  >
+  </div>
+</div>
+<code class="text-xs font-mono">
+  <span class="opacity-50">{`.portfolio {`}</span>
+  <span class="flex items-center">
+    &emsp;&emsp;
+    <span class="flex items-center flex-wrap">
+      <span class="opacity-75">background-color:</span>
+      <ColorPicker
+        class="ml-1"
+        id="main-950"
+        defaultVariant={900}
+        variants={[
+          950,
+
+          900,
+
+          800,
+
+          700,
+
+          600,
+        ]}
+        name="color-primary"
+      />
+    </span>
+  </span>
+  <span class="flex items-center">
+    &emsp;&emsp;
+    <span class="flex items-center flex-wrap">
+      <span class="opacity-75">color:</span>
+      <ColorPicker class="ml-1" id="main-950" name="color-white" />
+    </span>
+  </span>
+  <span class="flex items-center">
+    &emsp;&emsp;
+    <span class="flex items-center flex-wrap">
+      <span class="opacity-75">highlight:</span>
+      <ColorPicker class="ml-1" id="main-950" name="color-highlight" />
+    </span>
+  </span>
+  <span class="opacity-50">{"}"}</span>
+</code>

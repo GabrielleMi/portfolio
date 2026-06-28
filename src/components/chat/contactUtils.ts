@@ -1,4 +1,4 @@
-import { MS_PER_SEC, SEC_PER_MIN } from '@GabrielleMi/utils';
+import { MS_PER_SEC, SEC_PER_MIN } from '@GabrielleMi/core';
 import { string } from 'yup';
 
 export const generateId = () => Date.now();
