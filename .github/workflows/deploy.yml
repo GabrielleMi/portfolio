@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  packages: read
   pages: write
   id-token: write
 
@@ -16,6 +17,13 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v6
+
+      - name: Configure npm auth for GitHub Packages
+        run: |
+          echo "@GabrielleMi:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.UTILS_PACKAGE_TOKEN }}
 
       - name: Install, build, and upload your site
         uses: withastro/action@v6
